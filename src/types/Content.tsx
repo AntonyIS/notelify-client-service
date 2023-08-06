@@ -1,7 +1,7 @@
 
 export interface ContentProp {
-    contentID:string;
-    creatorID:string;
+    content_id:string;
+    creator_id:string;
     title:string;
     body:string;
 }
