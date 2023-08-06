@@ -4,6 +4,9 @@ import {FC} from "react";
 export  const Recommendations:FC = () => {
     return (
         <div className="mt-2 mb-2">
+             <p className="display-6">
+                Recommendations
+            </p>
             <div className="row">
                 <div className="col-12">
                     <div className="card mb-2">
