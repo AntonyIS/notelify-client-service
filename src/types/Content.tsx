@@ -8,6 +8,15 @@ export interface ContentProp {
 export interface ContentProps {
     contents: ContentProp[];
 }
+
+export interface AuthorProp {
+    firstname:string;
+    lastname:string;
+    handle:string;
+    contents:ContentProp[];
+    followers :number;
+    following :number;
+}
 // import React ,{FC, useEffect, useState} from 'react';
 // import { Navbar } from './components/Navbar';
 // import { Contents } from './components/Contents/Contents';
