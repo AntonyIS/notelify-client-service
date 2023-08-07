@@ -1,8 +1,7 @@
 import {FC, useEffect, useState} from "react";
-import { AuthorProp, ContentProp,ContentProps } from "../../types/Content";
-import { useParams } from 'react-router-dom';
-
-import { Link } from "react-router-dom";
+import { AuthorProp, ContentProp } from "../../types/Content";
+import { Link,useParams } from 'react-router-dom';
+import { ContentHeader } from "./ContentHeader";
 
 
 
@@ -19,43 +18,38 @@ export  const Content:FC = () => {
     const { id } = useParams();
     const [content,setcontent] = useState<ContentProp>()
     const [author,setAuthor] = useState<AuthorProp>()
-    const contentURL:string =  `http://157.175.153.161:8081/v1/contents/${id}`
-    const authorURL:string =  `http://15.185.192.167:8080/v1/users/${content?.creator_id}`
+    const contentURL:string =  `http://127.0.0.1:8081/v1/contents/${id}`
+
     useEffect(() => {
-        fetch(contentURL)
-          .then(response => response.json())
-          .then(data => {
-            setcontent(data);
-          })
-          .catch(error => {
+        async function fetchData() {
+          try {
+            const response1 = await fetch(contentURL);
+            const data1:ContentProp = await response1.json();
+            setcontent(data1);
+           
+            let authorURL:string = `http://127.0.0.1:8080/v1/users/${data1?.creator_id}`
+            const response2 = await fetch(authorURL);
+            const data2 = await response2.json();
+            setAuthor(data2);
+
+          } catch (error) {
             console.error('Error fetching data:', error);
-          });
+          }
+        }
+    
+        fetchData();
       }, []);
 
-      useEffect(() => {
-        fetch(authorURL)
-          .then(response => response.json())
-          .then(data => {
-            setAuthor(data);
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-          });
-      }, []);
-  
+
     return (
         <div className="container mt-2">
             <div className="card" style={linkStyle}>
                 <div className="card-body">
                    <div className="row">
                         <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                            <div className="display-6">
-                                {content?.title}
-                            </div>
-                            <p className="text-secondary">
-                                {content?.body}
-                            </p>
+                            <ContentHeader content_title={content?.title} content_publication_date={content?.publication_date} user_firstname="Antony" user_lastname="Injila"  user_imagePath="/images/user1.png" />
                             <p>
+                                {content?.body}
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque obcaecati voluptas nisi ipsa corrupti, modi blanditiis rerum exercitationem magnam earum. Molestiae explicabo blanditiis, iure alias nam et quas omnis debitis.
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque obcaecati voluptas nisi ipsa corrupti, modi blanditiis rerum exercitationem magnam earum. Molestiae explicabo blanditiis, iure alias nam et quas omnis debitis.
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque obcaecati voluptas nisi ipsa corrupti, modi blanditiis rerum exercitationem magnam earum. Molestiae explicabo blanditiis, iure alias nam et quas omnis debitis.
@@ -75,14 +69,16 @@ export  const Content:FC = () => {
                             </div>
                             <p className="text-secondary">
                                 {content?.body}
+                               
                             </p>
+                        
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque nostrum est laboriosam blanditiis ipsa quam labore neque culpa exercitationem consequatur illum rerum dolores odit, obcaecati ratione, quibusdam facere magni eum!</p>
-                            {author?.contents?.map((content:ContentProp) => (
+                            {author?.contents?.map((item:ContentProp) => (
                                 
-                               <Link to={`/posts/${content.content_id}`} style={LinklinkStyle} >
+                               <Link to={`/posts/n/${item.content_id}`} style={LinklinkStyle} key={item.content_id}>
                                     <div className="card mb-2">
-                                        <div className="card-body" key={content.content_id}>
-                                            <h5 className="text-secondary">{content.title}</h5>
+                                        <div className="card-body">
+                                            <h5 className="text-secondary">{item.title}</h5>
                                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
                                         </div>
                                     </div>

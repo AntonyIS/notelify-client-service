@@ -1,5 +1,5 @@
-import React ,{FC, useState, useEffect} from 'react';
-import { ContentProp, ContentProps } from '../../types/Content';
+import React ,{FC} from 'react';
+import { ContentProps } from '../../types/Content';
 import { Contents } from '../Contents/Contents';
 import { Recommendations } from '../Contents/Recommendations';
 

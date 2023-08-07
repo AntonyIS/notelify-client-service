@@ -1,8 +1,8 @@
 import React ,{FC, useState, useEffect} from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar } from './components/Navbar';
-import { Contents } from './components/Contents/Contents';
-import { Recommendations } from './components/Contents/Recommendations';
+// import { Contents } from './components/Contents/Contents';
+// import { Recommendations } from './components/Contents/Recommendations';
 import { ContentProp } from './types/Content';
 import { Home } from './components/Home/home';
 import { Content } from './components/Contents/Content';
@@ -14,7 +14,7 @@ const App:FC = ()  =>{
   const [contents,setcontents] = useState<ContentProp[]>([])
 
   useEffect(() => {
-    fetch('http://157.175.153.161:8081/v1/contents/')
+    fetch('http://157.175.196.138:8081/v1/contents/')
       .then(response => response.json())
       .then(data => {
         setcontents(data);
@@ -33,6 +33,7 @@ const App:FC = ()  =>{
         <Routes>
             <Route path="/" element={<Home  contents={contents}/>}/>
             <Route path="/posts/:id" element={<Content/>}/>
+            <Route path="/posts/n/:id" element={<Content/>}/>
         </Routes>
       </BrowserRouter>
       

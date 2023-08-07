@@ -15,7 +15,9 @@ export  const Navbar:FC = () => {
             <nav className="navbar bg-body-tertiary">
                 <div className="container-fluid">
                     <Link to={`/`} style={linkStyle} >
-                        Notlify
+                        <h5 className="display-6">
+                            Notlify
+                        </h5>
                     </Link>
                 </div>
             </nav>
