@@ -1,20 +1,21 @@
 import React ,{FC} from 'react';
-import { ContentProps } from '../../types/Content';
-import { Contents } from '../Contents/Contents';
-import { Recommendations } from '../Contents/Recommendations';
+import { AppProps } from '../../types/Types';
+import { Recommendations } from './recommendations';
+import { ItemTabs } from './itemTabs';
 
 
 
-export const Home:FC<ContentProps> = ({contents})  =>{
+
+export const Home:FC<AppProps> = ({posts, users,usersLoading,postsLoading})  =>{
   return (
     <>
        <div className="container">
           <div className="row">
             <div className="col-sm-12 col-md-12 col-md-8 col-lg-8 colxl-8">
-                <Contents contents={contents}/>
+                <ItemTabs posts={posts} users={users} usersLoading={usersLoading} postsLoading={postsLoading} />
             </div>
             <div className="col-sm-12 col-md-12 col-md-4 col-lg-4 colxl-4">
-              <Recommendations />
+                <Recommendations />
             </div>
           </div>
         </div>
