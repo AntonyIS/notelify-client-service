@@ -1,2 +1,11 @@
 # vp-front-end
-Simple ReactJS Typscript front end for VP
+This is the application frontend service build build using ReactJS & Typescript.
+This services displays articles/posts by all users, user details and many more.
+
+## Home page
+
+
+
+## User detail page
+
+
