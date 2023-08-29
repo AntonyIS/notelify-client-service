@@ -20,7 +20,6 @@ export  const UserList:FC<UserPropType> = ({users, loading}) => {
                         <>
                             {users?.map((user:UserProp) => (
                                 <Link to={`/users/${user.id}`} style={linkStyle} >
-                                    
                                     <User 
                                         id={user.id}
                                         firstname={user.firstname}

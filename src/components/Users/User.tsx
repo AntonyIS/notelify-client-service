@@ -1,17 +1,15 @@
 import {FC} from "react";
 import { UserProp } from "../../types/Types";
 import { UserHead } from "./UserHead";
-import { PostList } from "../Posts/PostList";
-
 
 const cardborder = {
-    border: 'none',
+    // border: 'none',
     borderBottom: '1px solid #dee2e6'
 };
 
 export  const User:FC<UserProp> = ({id, firstname, lastname, handle, contents, followers, following}) => {
     return (
-        <div className="card mb-2" style={cardborder}>
+        <div className="card-body p-0" style={cardborder}>
              <UserHead
             />
             <div className="row">
@@ -33,10 +31,7 @@ export  const User:FC<UserProp> = ({id, firstname, lastname, handle, contents, f
                     <div className="row">
                         
                     </div>
-                </div>
-               
-                    
-                    
+                </div>  
             </div>
     
         </div>
