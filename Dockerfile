@@ -1,11 +1,26 @@
-FROM node:20.0-alpine as build-stage
+# building
+FROM node:19-alpine3.15 AS development
+
 WORKDIR /app
-COPY package.json /app/package.json
-COPY package-lock.json /app/package-lock.json
-RUN npm install
+# Cache and Install dependencies
+
+COPY package*.json ./
+
+# Copy app files
 COPY . .
+
+# Build the app
 RUN npm run build
-FROM nginx:1.22.1-alpine as prod-stage
-COPY --from=build-stage /app/build /usr/share/nginx/html
-COPY --from=build-stage /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+
+# Bundle static assets with nginx
+FROM nginx:1.23-alpine as production
+
+# Copy built assets from development
+COPY --from=development /app/build /usr/share/nginx/html
+# Add your nginx.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Expose port
+EXPOSE 8082
+# Start nginx
 CMD ["nginx", "-g", "daemon off;"]
+
