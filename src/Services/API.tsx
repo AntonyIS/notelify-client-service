@@ -1,8 +1,8 @@
 import { ArticleEntity, UserEntity } from "../Entities/Entities";
 
-let articlesURL:string = "http://127.0.0.1:8081/v1/articles/"
-let authorArticlesURL:string = "http://127.0.0.1:8081/v1/articles/author/"
-let usersURL:string = "http://127.0.0.1:8083/v1/users/"
+let articlesURL:string = "/v1/articles/"
+let authorArticlesURL:string = "/v1/articles/author/"
+let usersURL:string = "/v1/users/"
 
 
 export const FetchUsers =():Promise<UserEntity[]> => {

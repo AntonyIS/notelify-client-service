@@ -7,18 +7,13 @@ import { ContentRecommendations } from '../components/Articles/ArticleRecommenda
 
 
 export const HomePage:FC = ()  =>{
-    const [contents, setContents] = useState<ArticleEntity[]>([])
-
-    useEffect(() => {
-        FetchContents().then(data => setContents(data))
-    }, [])
-
+   
     return (
       <>
         <div className="container p-1">
             <div className="row mt-1 mb-1">
                 <div className="col-sm-12 col-md-12 col-md-8 col-lg-8 colxl-8">
-                    <ContentList articles={contents} />
+                    <ContentList />
                 </div>
                 <div className="col-sm-12 col-md-12 col-md-4 col-lg-4 colxl-4">
                     <ContentRecommendations />

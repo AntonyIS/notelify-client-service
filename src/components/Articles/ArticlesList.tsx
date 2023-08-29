@@ -1,6 +1,7 @@
-import React ,{FC} from 'react';
+import React ,{FC,useEffect, useState} from 'react';
 import { ArticleEntity, ArticleListProps } from '../../Entities/Entities';
 import { Link } from 'react-router-dom';
+import { FetchContents } from '../../Services/API';
 
 
 
@@ -26,8 +27,12 @@ const cardStyle = {
     padding: "0px 0px 0px 0px"
 };
 
-export  const ContentList:FC<ArticleListProps> = ({ articles }) => {
- 
+export  const ContentList:FC = () => {
+    const [articles, setArticles] = useState<ArticleEntity[]>([])
+    useEffect(() => {
+        FetchContents().then(data => setArticles(data))
+    }, [])
+
     return (
         <>  
             <ul className="nav nav-tabs" id="myTab" role="tablist">

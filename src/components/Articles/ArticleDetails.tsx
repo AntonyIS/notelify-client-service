@@ -26,7 +26,6 @@ export  const ContentDetail:FC = () => {
     const [userArticles, setUserArticles] = useState<ArticleEntity[]>([])
     const [user, setUser] = useState<UserEntity>({})
 
-    console.log(user_id,article_id)
     useEffect(() => {
         FetchContent(article_id).then(data => setArticle(data))
         FetchUser(user_id).then(data => setUser(data))
