@@ -15,7 +15,7 @@ const App:FC = ()  =>{
         <Routes>
             <Route path="/" element={<HomePage/>}/>
             <Route path="/users/:user_id" element={<UserDetail/>}/>
-            <Route path="/posts/:user_id/:article_id" element={<ContentDetail/>}/>
+            <Route path="/articles/:user_id/:article_id" element={<ContentDetail/>}/>
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,5 +1,5 @@
 serve-dev:
-	NODE_ENV=development npm start
+	REACT_APP_ENV=development npm start
 
 serve-prod:
-	NODE_ENV=production npm start
+	REACT_APP_ENV=production npm start

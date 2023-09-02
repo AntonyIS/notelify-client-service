@@ -24,11 +24,11 @@ export  const ContentDetail:FC = () => {
     const { user_id,article_id } = useParams<string>();
     const [article, setArticle] = useState<ArticleEntity>({})
     const [userArticles, setUserArticles] = useState<ArticleEntity[]>([])
-    const [user, setUser] = useState<UserEntity>({})
-
+    // const [user, setUser] = useState<UserEntity>({})
+    
     useEffect(() => {
         FetchContent(article_id).then(data => setArticle(data))
-        FetchUser(user_id).then(data => setUser(data))
+        // FetchUser(user_id).then(data => setUser(data))
         FetchUserArticles(user_id).then(data => setUserArticles(data))
     }, [])
 
@@ -61,7 +61,7 @@ export  const ContentDetail:FC = () => {
                                                 <div className="card mb-2" style={cardStyle}>
                                                     <div className="card-body p-0">
                                                     <h4>{article.title} <span style={headStringStlye}>{article.publish_date?.slice(0, 10)}</span></h4>
-                                                    <UserHead id={article.article_id}/>
+                                                    {/* <UserHead id={article.article_id}/> */}
                                                     {article.body?.slice(0, 100)}...
                                                     </div>
                                                 </div>

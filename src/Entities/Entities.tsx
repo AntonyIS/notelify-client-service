@@ -10,7 +10,7 @@ export interface ArticleEntity {
 }
 
 export interface AuthorInfo {
-    author_id? :string;
+    id? :string;
     name? :string;
     bio? :string;
     profile_picture? :string;

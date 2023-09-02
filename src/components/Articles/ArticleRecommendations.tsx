@@ -40,7 +40,7 @@ export  const ContentRecommendations:FC = () => {
             
             <div className="row">
                 {artciles?.map((article:ArticleEntity) => (
-                    <Link to={`/posts/${article.author_info?.author_id}/${article.article_id}`} style={linkStyle} className='text-dark' key={article.article_id}>
+                    <Link to={`/posts/${article.author_info?.id}/${article.article_id}`} style={linkStyle} className='text-dark' key={article.article_id}>
                         <div className="col-12" >
                             <div className="card mb-2" style={cardStyle}>
                                 <div className="card-body p-0">

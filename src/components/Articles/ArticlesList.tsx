@@ -32,7 +32,7 @@ export  const ContentList:FC = () => {
     useEffect(() => {
         FetchContents().then(data => setArticles(data))
     }, [])
-
+  
     return (
         <>  
             <ul className="nav nav-tabs" id="myTab" role="tablist">
@@ -56,11 +56,10 @@ export  const ContentList:FC = () => {
                 </li>
             </ul>
             <div className="tab-content mt-3" id="myTabContent">
-                
                 <div className="mt-2 mb-2 tab-pane fade show active" id="golang" role="tabpanel" aria-labelledby="golang-tab">
                     <div className="row">
                         {articles?.map((article:ArticleEntity) => (
-                            <Link to={`/posts/${article.author_info?.author_id}/${article.article_id}`} style={linkStyle} className='text-dark' key={article.article_id}>
+                            <Link to={`/articles/${article.author_info?.id}/${article.article_id}`} style={linkStyle} className='text-dark' key={article.article_id}>
                                 <div className="col-12" >
                                     <div className="card mb-2" style={cardStyle}>
                                         <div className="card-body p-0">
