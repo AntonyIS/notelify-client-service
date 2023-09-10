@@ -1,8 +1,7 @@
 import { ArticleEntity, UserEntity } from "../Entities/Entities";
 
-let ARTICLES_URL = process.env.REACT_APP_ARTICLES_API_URL
-let USERS_URL = process.env.REACT_APP_USERS_API_URL
-
+let ARTICLES_URL = '/v1/articles'
+let USERS_URL = '/v1/users'
 
 export const FetchUsers =():Promise<UserEntity[]> => {
     return fetch(`${USERS_URL}/`)
