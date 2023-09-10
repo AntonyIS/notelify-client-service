@@ -39,9 +39,6 @@ export  const ContentList:FC = () => {
                 <li className="nav-item" role="presentation">
                     <button className="nav-link fw-light text-dark active" id="golang-tab" data-bs-toggle="tab" data-bs-target="#golang" type="button" role="tab" aria-controls="golang" aria-selected="true">Go Programming</button>
                 </li>
-                {/* <li className="nav-item" role="presentation">
-                    <button className="nav-link fw-light text-dark" id="following-tab" data-bs-toggle="tab" data-bs-target="#following" type="button" role="tab" aria-controls="following" aria-selected="false">following</button>
-                </li> */}
                 <li className="nav-item" role="presentation">
                     <button className="nav-link fw-light text-dark" id="aws-tab" data-bs-toggle="tab" data-bs-target="#aws" type="button" role="tab" aria-controls="aws" aria-selected="false">AWS</button>
                 </li>
@@ -63,12 +60,14 @@ export  const ContentList:FC = () => {
                                 <div className="col-12" >
                                     <div className="card mb-2" style={cardStyle}>
                                         <div className="card-body p-0">
-                                        <h4>{article.title} <span style={headStringStlye}>{article.publish_date?.slice(0, 10)}</span> </h4>
+                                        <h5>{article.title} <span style={headStringStlye}>{article.publish_date?.slice(0, 10)}</span> </h5>
                                         <div>
                                             <img src="/images/user1.png" style={imageStyle}/>
                                             <span className="text-secondary pr-3">{article.author_info?.name} <span style={headStringStlye}>Following {article.author_info?.following} Followers {article.author_info?.followers}</span></span> 
                                         </div>
-                                        {article.body?.slice(0, 400)}...
+                                            <p className=''>
+                                            {article.body?.slice(0, 400)}...
+                                            </p>
                                         </div>
                                     </div>
                                   
