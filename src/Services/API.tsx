@@ -1,6 +1,6 @@
 import { ArticleEntity, UserEntity } from "../Entities/Entities";
 
-let ARTICLES_URL = '/v1/articles'
+let ARTICLES_URL = '127.0.0.1:8001/v1/articles'
 let USERS_URL = '/v1/users'
 
 export const FetchUsers =():Promise<UserEntity[]> => {
@@ -28,17 +28,7 @@ export const FetchUser = (id?:string):Promise<UserEntity> => {
 }
 
 
-export const FetchContents =():Promise<ArticleEntity[]> => {
-    return fetch(`${ARTICLES_URL}/`)
-    .then(response => response.json())
-    .then(data => {
-        return data
-    })
-    .catch(error => {
-        console.error('Error fetching articles:',error)
-        return []
-    })
-}
+
 
 export const FetchUserArticles =(user_id?:string):Promise<ArticleEntity[]> => {
     return fetch(`${ARTICLES_URL}/author/${user_id}/`)

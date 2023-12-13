@@ -1,10 +1,7 @@
 import React ,{FC,useEffect, useState} from 'react';
-import { ArticleEntity, ArticleListProps } from '../../Entities/Entities';
 import { Link } from 'react-router-dom';
-import { FetchContents } from '../../Services/API';
-
-
-
+import { GetArticles, GetUser } from '../../internal/adapters/http/api';
+import { ArticleEntity , UserEntity} from '../../internal/core/domain';
 
 const linkStyle = {
     textDecoration: 'none',
@@ -27,11 +24,27 @@ const cardStyle = {
     padding: "0px 0px 0px 0px"
 };
 
-export  const ContentList:FC = () => {
+export  const ArticleList:FC = () => {
     const [articles, setArticles] = useState<ArticleEntity[]>([])
+    const [error, setError] = useState("");
     useEffect(() => {
-        FetchContents().then(data => setArticles(data))
-    }, [])
+        const fetchData = async () => {
+          try {
+            const articlesData = await GetArticles();
+    
+            if ('error' in articlesData) {
+                setError(`An error occurred: ${articlesData.error}`);
+            } else {
+                setArticles(articlesData);
+            }
+          } catch (error) {
+            setError(`An error occurred:`);
+          }
+        };
+    
+        fetchData();
+      }, []); 
+    
   
     return (
         <>  
@@ -42,28 +55,21 @@ export  const ContentList:FC = () => {
                 <li className="nav-item" role="presentation">
                     <button className="nav-link fw-light text-dark" id="aws-tab" data-bs-toggle="tab" data-bs-target="#aws" type="button" role="tab" aria-controls="aws" aria-selected="false">AWS</button>
                 </li>
-                <li className="nav-item" role="presentation">
-                    <button className="nav-link fw-light text-dark" id="k8-tab" data-bs-toggle="tab" data-bs-target="#k8" type="button" role="tab" aria-controls="k8" aria-selected="false">Kubernetes</button>
-                </li>
-                <li className="nav-item" role="presentation">
-                    <button className="nav-link fw-light text-dark" id="Python-tab" data-bs-toggle="tab" data-bs-target="#Python" type="button" role="tab" aria-controls="Python" aria-selected="false">Python</button>
-                </li>
-                <li className="nav-item" role="presentation">
-                    <button className="nav-link fw-light text-dark" id="javascript-tab" data-bs-toggle="tab" data-bs-target="#javascript" type="button" role="tab" aria-controls="javascript" aria-selected="false">ReactJS & Typscript</button>
-                </li>
             </ul>
             <div className="tab-content mt-3" id="myTabContent">
                 <div className="mt-2 mb-2 tab-pane fade show active" id="golang" role="tabpanel" aria-labelledby="golang-tab">
                     <div className="row">
-                        {articles?.map((article:ArticleEntity) => (
-                            <Link to={`/articles/${article.author_info?.id}/${article.article_id}`} style={linkStyle} className='text-dark' key={article.article_id}>
+                        {error && <p>{error}</p>}
+                       
+                        {Array.isArray(articles) && articles.map((article:ArticleEntity) => (
+                            <Link to={`/articles/${article.article_id}`} style={linkStyle} className='text-dark' key={article.article_id}>
                                 <div className="col-12" >
                                     <div className="card mb-2" style={cardStyle}>
                                         <div className="card-body p-0">
                                         <h5>{article.title} <span style={headStringStlye}>{article.publish_date?.slice(0, 10)}</span> </h5>
                                         <div>
                                             <img src="/images/user1.png" style={imageStyle}/>
-                                            <span className="text-secondary pr-3">{article.author_info?.name} <span style={headStringStlye}>Following {article.author_info?.following} Followers {article.author_info?.followers}</span></span> 
+                                            <span className="text-secondary pr-3">{article.author?.firstname} <span style={headStringStlye}>Following {article.author?.following} Followers {article.author?.followers}</span></span> 
                                         </div>
                                             <p className=''>
                                             {article.body?.slice(0, 400)}...

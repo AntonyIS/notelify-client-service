@@ -1,8 +1,10 @@
 import {FC, useEffect, useState} from "react";
 import { Link,useParams } from 'react-router-dom';
-import { FetchUser, FetchUserArticles, FetchUsers } from "../../Services/API";
-import { UserEntity,ArticleEntity } from "../../Entities/Entities";
+
+
 import { UserHead } from "./UserHead";
+import { GetUser } from "../../internal/adapters/http/api";
+import { UserEntity } from "../../internal/core/domain";
 
 
 const linkStyle = {
@@ -27,16 +29,28 @@ const imageStyle = {
 
 
 export  const UserDetail:FC = () => {
-    const { user_id } = useParams();
-    const [user,setUser] = useState<UserEntity>({})
-    const [users,setUsers] = useState<UserEntity[]>([])
-    const [articles,setArticles] = useState<ArticleEntity[]>([])
+    // Get user ID from URL params
+    const { user_id } = useParams<string>();
+    // Get article using article_id 
+    const [user, setUser] = useState<UserEntity>()
+    const [error, setError] = useState("");
     
     useEffect(() => {
-        FetchUser(user_id).then(data => setUser(data))
-        FetchUsers().then(data => setUsers(data))
-        FetchUserArticles(user_id).then(data => setArticles(data))
-    }, [])
+        const fetchData = async () => {
+            try {
+                if (user_id == undefined) {
+                    setError("Undefined Article");
+                } else {
+                    const userData = await GetUser(user_id);
+                    setUser(userData);
+                }
+            } catch (error) {
+                setError(`An error occurred: ${error}`);
+            }
+        };
+    
+        fetchData();
+    }, [user_id]);
  
     return (
         <div className="container mt-2">
@@ -52,17 +66,18 @@ export  const UserDetail:FC = () => {
                                 <li className="nav-item" role="presentation">
                                     <button className="nav-link fw-light text-dark active" id="home-user-tab" data-bs-toggle="tab" data-bs-target="#home-user" type="button" role="tab" aria-controls="home-user" aria-selected="true">Home</button>
                                 </li>
-                                <li className="nav-item" role="presentation">
+                                {/* <li className="nav-item" role="presentation">
                                     <button className="nav-link fw-light text-dark" id="user-following-tab" data-bs-toggle="tab" data-bs-target="#user-following" type="button" role="tab" aria-controls="user-following" aria-selected="false">Following</button>
                                 </li>
                                 <li className="nav-item" role="presentation">
                                     <button className="nav-link fw-light text-dark" id="user-followers-tab" data-bs-toggle="tab" data-bs-target="#user-followers" type="button" role="tab" aria-controls="user-followers" aria-selected="false">Followers</button>
-                                </li>
+                                </li> */}
                             </ul>
                             <div className="tab-content" id="myTabContent">
                                 <div className="mt-2 mb-2 tab-pane fade show active" id="home-user" role="tabpanel" aria-labelledby="home-user-tab">
                                     <>
-                                    {articles?.map((article:ArticleEntity) => (
+                                    {user?.about}
+                                    {/* {articles?.map((article:ArticleEntity) => (
                                         <Link to={`/posts/${user_id}/${article.article_id}`} style={linkStyle} className='text-dark' key={article.article_id}>
                                             <div className="col-12" >
                                                 <div className="card mb-2" style={cardStyle}>
@@ -78,12 +93,12 @@ export  const UserDetail:FC = () => {
                                             
                                             </div>
                                         </Link>
-                                    ))}
+                                    ))} */}
                                     </>
                                 </div>
                                 <div className="mt-2 mb-2 tab-pane fade show" id="user-following" role="tabpanel" aria-labelledby="user-following-tab">
                                     <>
-                                        {users?.map((user:UserEntity) => (
+                                        {/* {users?.map((user:UserEntity) => (
                                             <Link to={`/users/${user.id}`} style={linkStyle} className='text-dark' key={user.id}>
                                                 <div className="col-12" >
                                                     <div className="card mb-2" style={cardStyle}>
@@ -93,13 +108,13 @@ export  const UserDetail:FC = () => {
                                                     </div>
                                                 </div>
                                             </Link>
-                                        ))}
+                                        ))} */}
                                     
                                     </>
                                 </div>
                                 <div className="mt-2 mb-2 tab-pane fade show" id="user-followers" role="tabpanel" aria-labelledby="user-followers-tab">
                                     <>
-                                        {users?.map((user:UserEntity) => (
+                                        {/* {users?.map((user:UserEntity) => (
                                             <Link to={`/users/${user.id}`} style={linkStyle} className='text-dark' key={user.id}>
                                                 <div className="col-12" >
                                                     <div className="card mb-2" style={cardStyle}>
@@ -109,7 +124,7 @@ export  const UserDetail:FC = () => {
                                                     </div>
                                                 </div>
                                             </Link>
-                                        ))}
+                                        ))} */}
                                     </>
                                 </div>
                                
@@ -130,7 +145,7 @@ export  const UserDetail:FC = () => {
                                         <div className="col-8">
                                             <h3>{user?.firstname} {user?.lastname}</h3>
                                             
-                                            <button className="btn btn-secondary">Following</button>
+                                            {/* <button className="btn btn-secondary">Following</button> */}
                                             <p>
                                                 <span>0 Followers | 0 Following</span>
 
@@ -142,7 +157,7 @@ export  const UserDetail:FC = () => {
                             <div className="card mt-2">
                                 <div className="card-body">
                                     About
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores obcaecati optio tempora, aliquam sunt perspiciatis consequuntur aspernatur corrupti quasi itaque ut voluptates odio error enim, autem aut. Quaerat, at odit.</p>
+                                    <p>{user?.about}</p>
                                 </div>
                             </div>
                             <div className="card mt-2">

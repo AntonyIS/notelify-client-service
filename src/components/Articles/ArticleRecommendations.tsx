@@ -1,7 +1,7 @@
 import React ,{FC, useEffect, useState} from 'react';
 import { ArticleEntity } from '../../Entities/Entities';
-import { FetchContents } from '../../Services/API';
 import { Link } from 'react-router-dom';
+import { GetArticles } from '../../internal/adapters/http/api';
 
 
 
@@ -29,17 +29,29 @@ const imageStyle = {
 
 
 export  const ContentRecommendations:FC = () => {
-    const [artciles, setArticles] = useState<ArticleEntity[]>([])
+    const [articles, setArticles] = useState<ArticleEntity[]>([])
+    const [error, setError] = useState("");
     
     useEffect(() => {
-        FetchContents().then(data => setArticles(data))
-    }, [])
+        const fetchData = async () => {
+          try {
+            const articlesData = await GetArticles();
+    
+            setArticles(articlesData);
+          } catch (error) {
+            setError(`An error occurred:`);
+          }
+        };
+    
+        fetchData();
+      }, []); 
+    
     return (
         <>
             <h4>Recommandations </h4>
             
             <div className="row">
-                {artciles?.map((article:ArticleEntity) => (
+                {Array.isArray(articles) && articles.map((article:ArticleEntity) => (
                     <Link to={`/posts/${article.author_info?.id}/${article.article_id}`} style={linkStyle} className='text-dark' key={article.article_id}>
                         <div className="col-12" >
                             <div className="card mb-2" style={cardStyle}>

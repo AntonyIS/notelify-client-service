@@ -2,9 +2,8 @@ import React ,{FC} from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar } from './components/Navbar/Navbar';
 import { HomePage } from './Pages/HomePage';
-import { ContentDetail } from './components/Articles/ArticleDetails';
+import { ArticleDetails } from './components/Articles/ArticleDetails';
 import { UserDetail } from './components/Users/UserDetail';
-
 
 const App:FC = ()  =>{
 
@@ -15,7 +14,7 @@ const App:FC = ()  =>{
         <Routes>
             <Route path="/" element={<HomePage/>}/>
             <Route path="/users/:user_id" element={<UserDetail/>}/>
-            <Route path="/articles/:user_id/:article_id" element={<ContentDetail/>}/>
+            <Route path="/articles/:article_id" element={<ArticleDetails/>}/>
         </Routes>
       </BrowserRouter>
     </div>
