@@ -6,8 +6,8 @@ export interface ArticleEntity {
     body          :string;
     tags          :string[];
     publish_date  :string;
-    author_id   :string;
-    author : UserEntity ;
+    author_id     :string;
+    author        : UserEntity ;
 }
 
 export interface UserEntity {
@@ -18,7 +18,7 @@ export interface UserEntity {
     handle         :string;
     about          :string;
     articles       :string;
-    password        : string;
+    password       :string;
     profile_image  :string;
     following      :number;
     followers      :number;

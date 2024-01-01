@@ -1,9 +1,10 @@
 import React ,{FC, useEffect, useState} from 'react';
 import { ArticleEntity } from '../../Entities/Entities';
 import { Link } from 'react-router-dom';
-import { GetArticles } from '../../internal/adapters/http/api';
 
-
+interface ArticleList {
+    articles: ArticleEntity[];
+  }
 
 const linkStyle = {
     textDecoration: 'none',
@@ -28,28 +29,9 @@ const imageStyle = {
 
 
 
-export  const ContentRecommendations:FC = () => {
-    const [articles, setArticles] = useState<ArticleEntity[]>([])
-    const [error, setError] = useState("");
-    
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const articlesData = await GetArticles();
-    
-            setArticles(articlesData);
-          } catch (error) {
-            setError(`An error occurred:`);
-          }
-        };
-    
-        fetchData();
-      }, []); 
-    
+export  const ContentRecommendations:FC<ArticleList>= ({articles}) => {
     return (
         <>
-            <h4>Recommandations </h4>
-            
             <div className="row">
                 {Array.isArray(articles) && articles.map((article:ArticleEntity) => (
                     <Link to={`/posts/${article.author_info?.id}/${article.article_id}`} style={linkStyle} className='text-dark' key={article.article_id}>

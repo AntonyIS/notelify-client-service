@@ -16,11 +16,12 @@ const headStringStlye = {
 export  const ContentCardHeader:FC<ContentCardHead> = ({title, publication_date, name,followers, following}) => {
     return (
         <>
-           <h4>{title} <span style={headStringStlye}>{publication_date?.slice(0, 10)}</span></h4>
+           
             <div>
                 <img src="/images/user1.png" style={imageStyle}/>
-                <span className="text-secondary pr-3">{name} <span style={headStringStlye}>Following {following} Followers {followers}</span></span> 
+                <span className="text-secondary pr-3">{name} <span style={headStringStlye}>{publication_date?.slice(0, 10)}</span></span> 
             </div>
+         
         </>
     )
 }
