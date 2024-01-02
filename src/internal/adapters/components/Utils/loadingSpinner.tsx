@@ -1,5 +1,5 @@
 import {FC} from "react";
-import { Spinner } from "../../types/Types";
+import { Spinner } from "../../../../types/Types";
 
 
 

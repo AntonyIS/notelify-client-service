@@ -1,7 +1,7 @@
 import React ,{FC,useEffect, useState} from 'react';
 
-import { GetArticles, GetUser } from '../../internal/adapters/http/api';
-import { ArticleEntity , UserEntity} from '../../internal/core/domain';
+import { GetArticles } from '../../http/api';
+import { ArticleEntity } from '../../../core/domain';
 import { ArticleList } from './ArticleList';
 import { ContentRecommendations } from './ArticleRecommendations';
 import {  ResponsePage } from '../ResponsePages/ResponsePage';

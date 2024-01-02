@@ -1,5 +1,5 @@
 import React ,{FC, useEffect, useState} from 'react';
-import { ArticleHome } from '../components/Articles/ArticleHome';
+import { ArticleHome } from '../internal/adapters/components/Articles/ArticleHome';
 
 
 

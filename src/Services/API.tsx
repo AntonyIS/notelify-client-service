@@ -1,4 +1,5 @@
-import { ArticleEntity, UserEntity } from "../Entities/Entities";
+import { ArticleEntity, UserEntity } from "../internal/core/domain"
+
 
 let ARTICLES_URL = '127.0.0.1:8001/v1/articles'
 let USERS_URL = '/v1/users'
@@ -15,17 +16,6 @@ export const FetchUsers =():Promise<UserEntity[]> => {
     })
 }
 
-export const FetchUser = (id?:string):Promise<UserEntity> => {
-    return fetch(`${USERS_URL}/${id}/`)
-    .then(response => response.json())
-    .then(data => {
-        return data
-    })
-    .catch(error => {
-        console.error('Error fetching user:',error)
-        return []
-    })
-}
 
 
 

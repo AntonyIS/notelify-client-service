@@ -41,6 +41,44 @@ export const  GetArticles = async () : Promise <ArticleEntity[]> => {
     }
 }
 
+// HTTP GET request for all articles
+export const  GetAuthorArticles = async (user_id:String) : Promise <ArticleEntity[]> => {
+    try {
+        const URL = `${ARTICLES_URL}/v1/articles/author/${user_id}`
+        const response = await fetch(URL)
+
+        if (!response.ok) {
+            throw new Error(`HTTP error!: ${response.status}`)
+        }
+        const articles = await response.json()
+        
+        const allArticles = await Promise.all(
+            articles.map(async (article:ArticleEntity) => {
+                const authorId = article.author_id
+                // Check if authorId is defined before using it
+                if (authorId !== undefined) {
+                    // Now TypeScript knows that authorId is a string
+                    // and you can safely use it as such
+                    const userData = await GetUser(authorId);
+                    if (userData !== undefined) {
+                        return { ...article, author: userData };
+                    }else{
+                        return { ...article, author: {} };
+                    }
+                } else {
+                    // Handle the case where authorId is undefined
+                    console.error("Author ID is undefined");
+                    return { ...article, author: {} };
+                }
+            })
+        );
+        return allArticles
+    }catch (error) {
+        throw new Error (`ERROR : ${error}`)
+    }
+}
+
+
 // HTTP GET an Article
 export const GetArticle = async (article_id:string) : Promise <ArticleEntity> => {
     try {

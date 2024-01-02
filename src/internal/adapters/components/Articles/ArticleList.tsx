@@ -1,7 +1,7 @@
 import React ,{FC,useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
-import { GetArticles, GetUser } from '../../internal/adapters/http/api';
-import { ArticleEntity , UserEntity} from '../../internal/core/domain';
+import { GetArticles, GetUser } from '../../http/api';
+import { ArticleEntity , UserEntity} from '../../../core/domain';
 
 interface ArticleList {
   articles: ArticleEntity[];
@@ -41,13 +41,13 @@ export  const ArticleList:FC<ArticleList> = ({articles}) => {
                     className="text-dark"
                     key={article.article_id}
                   >
-                    <div className="col-12">
+                    <div className="col-12 shadow bg-body-tertiary rounded">
                       <div className="card mb-2" style={cardStyle}>
                         <div className="card-body">
                           <div className="row">
                             {/* Image on the left */}
                             <div className="col-md-4">
-                              <img src="/images/article.jpg" className="img-fluid rounded float-left" alt="..." style={ArticleimageStyle} />
+                              <img src="/images/article.jpg" className="img-fluid float-left" alt="..." style={ArticleimageStyle} />
                             </div>
 
                             {/* Article details on the right */}
@@ -55,14 +55,11 @@ export  const ArticleList:FC<ArticleList> = ({articles}) => {
                             <div className="col-md-4">
                               <img src="/images/user1.png" style={imageStyle} />
                               <span className="text-secondary pr-3">
-                                  {article.author?.firstname}{" "}
-                                  <span style={headStringStlye}>
-                                    {/* Following {article.author?.following} Followers{" "}
-                                    {article.author?.followers} */}
-                                  </span>
-                                </span>
+                                  {article.author?.firstname} {article.author?.lastname}
+                                  
+                              </span>
                             </div>
-                              <h5>
+                              <h5 className='fw-light'>
                                 {article.title}{" "}
                                 <span style={headStringStlye}>
                                   {article.publish_date?.slice(0, 10)}
@@ -72,7 +69,7 @@ export  const ArticleList:FC<ArticleList> = ({articles}) => {
                                 
                               </div>
                               <p className="fw-lighter">
-                                {article.body?.slice(0, 400)}...
+                                {article.body?.slice(0, 200)}...
                               </p>
                             </div>
                           </div>
