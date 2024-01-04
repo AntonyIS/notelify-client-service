@@ -32,7 +32,7 @@ const cardStyle = {
 export  const ArticleList:FC<ArticleList> = ({articles}) => {
     return (
         <>
-          <div className="tab-content mt-3" id="myTabContent">
+          <div className="mt-3" id="myTabContent">
               {Array.isArray(articles) &&
                 articles.map((article: ArticleEntity) => (
                   <Link
@@ -41,17 +41,10 @@ export  const ArticleList:FC<ArticleList> = ({articles}) => {
                     className="text-dark"
                     key={article.article_id}
                   >
-                    <div className="col-12 shadow bg-body-tertiary rounded">
-                      <div className="card mb-2" style={cardStyle}>
-                        <div className="card-body">
-                          <div className="row">
-                            {/* Image on the left */}
-                            <div className="col-md-4">
-                              <img src="/images/article.jpg" className="img-fluid float-left" alt="..." style={ArticleimageStyle} />
-                            </div>
-
-                            {/* Article details on the right */}
-                            <div className="col-md-8">
+                    <div className="card mb-2" style={cardStyle}>
+                      <div className="card-body">
+                        <div className="row">
+                          <div className="col-md-8">
                             <div className="col-md-4">
                               <img src="/images/user1.png" style={imageStyle} />
                               <span className="text-secondary pr-3">
@@ -59,19 +52,21 @@ export  const ArticleList:FC<ArticleList> = ({articles}) => {
                                   
                               </span>
                             </div>
-                              <h5 className='fw-light'>
-                                {article.title}{" "}
-                                <span style={headStringStlye}>
-                                  {article.publish_date?.slice(0, 10)}
-                                </span>{" "}
-                              </h5>
-                              <div className="mb-2">
-                                
-                              </div>
-                              <p className="fw-lighter">
-                                {article.body?.slice(0, 200)}...
-                              </p>
+                            <h5 className='fw-light'>
+                              {article.title}{" "}
+                              <span style={headStringStlye}>
+                                {article.publish_date?.slice(0, 10)}
+                              </span>{" "}
+                            </h5>
+                            <div className="mb-2">
+                              
                             </div>
+                            <p className="fw-lighter">
+                              {article.body?.slice(0, 200)}...
+                            </p>
+                          </div>
+                          <div className="col-md-4">
+                            <img src="/images/article.jpg" className="img-fluid float-left" alt="..." style={ArticleimageStyle} />
                           </div>
                         </div>
                       </div>

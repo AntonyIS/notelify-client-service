@@ -1,11 +1,20 @@
 import React ,{FC,useEffect, useState} from 'react';
-
+import { Link } from "react-router-dom";
 import { GetArticles } from '../../http/api';
 import { ArticleEntity } from '../../../core/domain';
 import { ArticleList } from './ArticleList';
 import { ContentRecommendations } from './ArticleRecommendations';
 import {  ResponsePage } from '../ResponsePages/ResponsePage';
+import { AddNewArticle } from './AddNewArticle';
 
+const roundButton = {
+    borderRadius: "60px"
+}
+
+const linkStyle = {
+    textDecoration: 'none',
+    borderRadius : '30%'
+ };
 
 export  const ArticleHome:FC = () => {
     // Pull Articles from the articles service
@@ -38,6 +47,22 @@ export  const ArticleHome:FC = () => {
             {error && 
                 <ResponsePage message={error} statusCode={"500"}/>
             }
+            <div className='row'>
+                <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                    <div className="card mb-2 text-bg-light p-3" style={{border: "none"}}>
+                        <div className="card-body">
+                            <h6 className='fw-light'>Draft an Article ?</h6>
+                            <Link to={`/articles/draft`} style={linkStyle}>
+                                <button className="btn btn-info fw-light" style={roundButton}>Draft</button>
+                            </Link>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                    
+                </div>
+            </div>
             <div className='row'>
                 <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                     <ArticleList articles={articles} />

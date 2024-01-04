@@ -8,6 +8,10 @@ const cardStyle = {
     border: "none"
 }
 
+const roundButton = {
+    borderRadius: "60px",
+    margin:"5px"
+}
 const linkStyle = {
     textDecoration: 'none',
     color:"#00000"
@@ -90,7 +94,7 @@ export  const ArticleDetails:FC = () => {
                         <div className='text-center mb-2'>
                             <p>. . . </p>
                             {article?.tags.map((tag:String)=>(
-                                <button className="btn btn-info mr-3" style={{borderRadius: "25%",}}>{tag}</button>
+                                <button className="btn btn-info mr-3" style={roundButton}>{tag}</button>
                             ))}
                         </div>
                        

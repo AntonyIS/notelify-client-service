@@ -20,7 +20,7 @@ const headStringStlye = {
 
 const cardStyle = {
     border: 'none',
-    borderBottom: '1px solid #dee2e6'
+
 };
 
 const imageStyle = {
@@ -44,8 +44,8 @@ export  const ContentRecommendations:FC<ArticleList>= ({articles}) => {
                         className="text-dark"
                         key={article.article_id}
                     >
-                        <div className="col-12 shadow bg-body-tertiary rounded" >
-                            <div className="card mb-2 mb-1 p-2">
+                        <div className="col-12" >
+                            <div className="card mb-2 mb-1 p-2" style={cardStyle}>
                                 <div className="card-body p-0">
                                 <img src="/images/user1.png" style={imageStyle} />
                                     <span className="text-secondary pr-3">
