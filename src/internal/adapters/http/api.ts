@@ -1,16 +1,54 @@
 import { ArticleEntity, UserEntity } from "../../core/domain"
 
-let ARTICLES_URL = process.env.REACT_APP_ARTICLES_API_URL
-let USERS_URL = process.env.REACT_APP_USERS_API_URL
+// let ARTICLES_URL = process.env.REACT_APP_ARTICLES_API_URL
+// let USERS_URL = process.env.REACT_APP_USERS_API_URL
+
+let ARTICLES_URL="http://articles/v1/articles/"
+let USERS_URL="http://users/v1/users/"
 
 
-// HTTP GET request for all articles
-export const  GetArticles = async () : Promise <ArticleEntity[]> => {
+
+interface FormData {
+    title: string;
+    subtitle: string;
+    body: string;
+}
+
+interface postResponse {
+    article_id:string
+}
+
+export const  PostArticle = async (article:FormData): Promise <postResponse> => {
     try {
         const URL = `${ARTICLES_URL}/v1/articles/`
-        const response = await fetch(URL)
+        const response = await fetch(URL, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(article),
+        });
 
         if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const responseData = await response.json();
+        return {
+            "article_id" :responseData.article_id
+        }
+    }catch (error) {
+        throw new Error (`ERROR : ${error}`)
+    }
+}
+// HTTP GET request for all articles
+export const  GetArticles = async () : Promise <ArticleEntity[]> => {
+    const URL = `${ARTICLES_URL}/v1/articles/`
+    console.log(URL)
+    try {
+        
+        const response = await fetch(URL)
+        if (!response.ok) {
+            console.log(`HTTP error!: ${response.status}`)
             throw new Error(`HTTP error!: ${response.status}`)
         }
         const articles = await response.json()
@@ -37,6 +75,7 @@ export const  GetArticles = async () : Promise <ArticleEntity[]> => {
         );
         return allArticles
     }catch (error) {
+        console.log(error)
         throw new Error (`ERROR : ${error}`)
     }
 }
@@ -81,8 +120,10 @@ export const  GetAuthorArticles = async (user_id:String) : Promise <ArticleEntit
 
 // HTTP GET an Article
 export const GetArticle = async (article_id:string) : Promise <ArticleEntity> => {
+    const URL = `${ARTICLES_URL}/v1/articles/${article_id}`
+    console.log(URL)
     try {
-        const response = await fetch(`${ARTICLES_URL}/v1/articles/${article_id}`)
+        const response = await fetch(URL)
 
         if (!response.ok) {
             throw new Error (`HTTP error!: ${response.ok}`)
@@ -97,6 +138,7 @@ export const GetArticle = async (article_id:string) : Promise <ArticleEntity> =>
             return { ...article, author: {} };
         }
     }catch(error) {
+        console.log(error)
         throw new Error (`ERROR : ${error}`)
     }
 }
@@ -128,6 +170,7 @@ export const  GetUsers = async () : Promise <UserEntity[] | { error: string}> =>
     
         return users
     }catch (error) {
+        console.log("GET USERS ERROR::: ",error)
         return {"error": `ERROR : ${error} Server`}
     }
 }
@@ -145,6 +188,7 @@ export const GetUser = async (user_id: string): Promise<UserEntity> => {
         const user = await response.json();
         return user;
     } catch (error) {
+        console.log("GET USER ERROR::: ",error)
         throw new Error(`ERROR: ${error}`);
     }
 };

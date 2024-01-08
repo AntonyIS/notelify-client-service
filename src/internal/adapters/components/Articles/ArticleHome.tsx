@@ -28,8 +28,8 @@ export  const ArticleHome:FC = () => {
             const articlesData = await GetArticles();
             if ('error' in articlesData) {
                 setError(`Internal server error ${articlesData.error}`);
-            } else if(articlesData.length == 0 ){
-                setError(`Articles not available!`);
+            // } else if(articlesData.length == 0 ){
+            //     setError(`Articles not available!`);
             }else{
                 setArticles(articlesData);  
             }
@@ -40,37 +40,43 @@ export  const ArticleHome:FC = () => {
         fetchData();
     }, []); 
     
-  
+    
     return (
         <>  
         <div className="container">
-            {error && 
-                <ResponsePage message={error} statusCode={"500"}/>
-            }
-            <div className='row'>
-                <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                    <div className="card mb-2 text-bg-light p-3" style={{border: "none"}}>
-                        <div className="card-body">
-                            <h6 className='fw-light'>Draft an Article ?</h6>
-                            <Link to={`/articles/draft`} style={linkStyle}>
-                                <button className="btn btn-info fw-light" style={roundButton}>Draft</button>
-                            </Link>
+        {
+            error ? (
+                <ResponsePage message={error} statusCode={"500"} />
+            ) : (
+                <div>
+                <div className='row'>
+                        <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                            <div className="card mb-2 text-bg-light p-3" style={{border: "none"}}>
+                                <div className="card-body">
+                                    <h6 className='fw-light'>Draft an Article ?</h6>
+                                    <Link to={`/articles/draft`} style={linkStyle}>
+                                        <button className="btn btn-info fw-light" style={roundButton}>Draft</button>
+                                    </Link>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                             
                         </div>
                     </div>
+                    <div className='row'>
+                        <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                            <ArticleList articles={articles} />
+                        </div>
+                        <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <ContentRecommendations articles={articles} />
+                        </div>
+                    </div>
                 </div>
-                <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                    
-                </div>
-            </div>
-            <div className='row'>
-                <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                    <ArticleList articles={articles} />
-                </div>
-                <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                    <ContentRecommendations articles={articles} />
-                </div>
-            </div>
+            )
+        }
+           
         </div>
         </>
     )

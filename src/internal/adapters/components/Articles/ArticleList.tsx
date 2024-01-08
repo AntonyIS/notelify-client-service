@@ -1,7 +1,6 @@
-import React ,{FC,useEffect, useState} from 'react';
+import React ,{FC} from 'react';
 import { Link } from 'react-router-dom';
-import { GetArticles, GetUser } from '../../http/api';
-import { ArticleEntity , UserEntity} from '../../../core/domain';
+import { ArticleEntity } from '../../../core/domain';
 
 interface ArticleList {
   articles: ArticleEntity[];
