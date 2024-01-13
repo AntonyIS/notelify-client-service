@@ -21,7 +21,7 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          DOCKER_USERNAME_CHECK: ${{ variables.DOCKER_PASSWORD }}
+          DOCKER_USERNAME_CHECK: ${{ Development.DOCKER_PASSWORD }}
         run: |
           echo  $DOCKER_USERNAME
           echo  $DOCKER_USERNAME_CHECK
