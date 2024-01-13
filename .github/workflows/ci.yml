@@ -20,7 +20,10 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_USERNAME_CHECK: ${{ variables.DOCKER_PASSWORD }}
         run: |
+          echo  $DOCKER_USERNAME
+          echo  $DOCKER_USERNAME_CHECK
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
           docker build --build-arg REACT_APP_ENV=docker -t antonyinjila/notelify-client-service:latest .
           docker push antonyinjila/notelify-client-service:latest  
