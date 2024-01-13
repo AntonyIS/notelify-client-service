@@ -81,17 +81,20 @@ export  const ArticleDetails:FC = () => {
                                         {article?.title}
                                     </h4>
                                     <Link to={`/users/${article?.author_id}`} style={linkStyle} className='text-dark'>
-                                        <div className='mb-3'>
+                                        <div className='mb-3 fw-lighter'>
                                             <span className='mr-3'>
                                                 <img src={article?.author?.profile_image} alt="" style={imageStyle} />
                                             </span>
-                                            <span className='fw-lighter'>
+                                            <span>
                                                 {article?.author.firstname} {article?.author.lastname}
                                             </span>
                                             <br />
-                                            <span className='fw-lighter'>
-                                                Published {article?.publish_date} 
+                                            <span>
+                                                Published {article?.publish_date?.slice(0, 10)}  
                                             </span>
+                                            
+                                            <br />
+                                            
                                         </div>
                                     </Link>
                                     
