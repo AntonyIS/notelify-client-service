@@ -1,11 +1,11 @@
 import React ,{FC,useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
-import { GetArticles } from '../../http/api';
-import { ArticleEntity } from '../../../core/domain';
+import { GetArticles, GetUsers, PostUser } from '../../http/api';
+import { ArticleEntity} from '../../../core/domain';
 import { ArticleList } from './ArticleList';
 import { ContentRecommendations } from './ArticleRecommendations';
 import {  ResponsePage } from '../ResponsePages/ResponsePage';
-import { AddNewArticle } from './AddNewArticle';
+
 
 const roundButton = {
     borderRadius: "60px"
@@ -14,7 +14,8 @@ const roundButton = {
 const linkStyle = {
     textDecoration: 'none',
     borderRadius : '30%'
- };
+};
+
 
 export  const ArticleHome:FC = () => {
     // Pull Articles from the articles service
@@ -28,9 +29,20 @@ export  const ArticleHome:FC = () => {
             const articlesData = await GetArticles();
             if ('error' in articlesData) {
                 setError(`Internal server error ${articlesData.error}`);
-            // } else if(articlesData.length == 0 ){
-            //     setError(`Articles not available!`);
+            } else if(articlesData.length == 0 ){
+                const users = await GetUsers()
+              
+                if ('error' in articlesData) {
+                    setError(`Internal server error:Users service error`);
+                }else{
+                    if (Array.isArray(users) && users.length === 0) {
+                       
+                        setArticles([]);
+                        PostUser();
+                    }
+                }
             }else{
+               
                 setArticles(articlesData);  
             }
           } catch (error) {
@@ -81,3 +93,5 @@ export  const ArticleHome:FC = () => {
         </>
     )
 }
+
+

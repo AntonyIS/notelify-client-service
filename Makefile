@@ -3,3 +3,5 @@ serve-dev:
 
 serve-prod:
 	NODE_ENV=production npm start
+serve:
+	npm start

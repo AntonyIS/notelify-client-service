@@ -45,7 +45,7 @@ export  const ArticleList:FC<ArticleList> = ({articles}) => {
                         <div className="row">
                           <div className="col-md-8">
                             <div className="col-md-4">
-                              <img src="/images/user1.png" style={imageStyle} />
+                              <img src={article.author?.profile_image} style={imageStyle} />
                               <span className="text-secondary pr-3">
                                   {article.author?.firstname} {article.author?.lastname}
                                   

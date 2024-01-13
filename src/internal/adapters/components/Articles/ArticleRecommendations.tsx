@@ -47,11 +47,13 @@ export  const ContentRecommendations:FC<ArticleList>= ({articles}) => {
                         <div className="col-12" >
                             <div className="card mb-2 mb-1 p-2" style={cardStyle}>
                                 <div className="card-body p-0">
-                                <img src="/images/user1.png" style={imageStyle} />
+                                <img src={article.author?.profile_image} style={imageStyle} />
                                     <span className="text-secondary pr-3">
                                         {article.author?.firstname} {article.author?.lastname}
                                     </span>
-                                <h5 className="fw-light">{article.title}</h5>
+                                <h5 className="fw-light">
+                                    {article.title?.slice(0, 30)}...
+                                </h5>
                                 <p className="fw-lighter">
                                     {article.body?.slice(0, 100)}...
                                 </p>

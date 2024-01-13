@@ -1,5 +1,5 @@
 import React ,{FC,useState} from 'react';
-import { PostArticle } from '../../http/api';
+import { GetUser, GetUsers, PostArticle } from '../../http/api';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -16,7 +16,7 @@ interface FormData {
     title: string;
     subtitle: string;
     body: string;
-    tags: []
+    tags: string[]
 }
 
 interface FormErrors {
@@ -29,12 +29,14 @@ interface FormErrors {
 
 export  const AddNewArticle:FC = () => {
     const navigate = useNavigate();
+ 
+    
     const [formData, setFormData] = useState<FormData>({
-        author_id: 'bc109060-5505-4905-96cd-a9aabbd89e9f',
+        author_id: '',
         title: '',
         subtitle: '',
         body: '',
-        tags: []
+        tags: ["Programming", "Computer Science"]
     });
 
     const [errors, setErrors] = useState<FormErrors>({
@@ -71,8 +73,23 @@ export  const AddNewArticle:FC = () => {
       
         if (valid) {
             // Send data to the article service
-            const response = PostArticle(formData)
-            console.log(response)
+            
+            const fetchData = async () =>  {
+                const users =  await GetUsers()
+              
+                if ('error' in users) {
+                    console.log(`Internal server error:Users service error`);
+                }else{
+                    if (Array.isArray(users) && users.length > 0) {
+                        let user = users[0]
+                       
+                        formData.author_id = user.user_id
+                        PostArticle(formData)
+                    }
+                }
+            }
+            
+            fetchData()
             setFormData(
                 { 
                     author_id: '',

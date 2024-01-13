@@ -1,25 +1,22 @@
-# building
+# building stage
 FROM node:19-alpine3.15 AS development
 
 WORKDIR /app
 
 # Set environment variables for build
-ARG REACT_APP_ARTICLES_API_URL
-ARG REACT_APP_USERS_API_URL
-
-ENV REACT_APP_ARTICLES_API_URL=$REACT_APP_ARTICLES_API_URL
-ENV REACT_APP_USERS_API_URL=$REACT_APP_USERS_API_URL
+ARG REACT_APP_ENV
+ENV REACT_APP_ENV=${REACT_APP_ENV}
 
 # Cache and Install dependencies
 COPY package*.json ./
 
-# Set environment variables for build
+# Copy the rest of the application code
 COPY . .
 
 # Build the app
 RUN npm run build
 
-# Bundle static assets with nginx
+# production stage
 FROM nginx:1.23-alpine as production
 
 # Copy built assets from development
