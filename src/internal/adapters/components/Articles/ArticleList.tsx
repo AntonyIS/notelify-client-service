@@ -45,10 +45,17 @@ export  const ArticleList:FC<ArticleList> = ({articles}) => {
                         <div className="row">
                           <div className="col-md-8">
                             <div className="col-md-4">
-                              <img src={article.author?.profile_image} style={imageStyle} />
-                              <span className="text-secondary pr-3">
-                                  {article.author?.firstname} {article.author?.lastname}  
-                              </span>
+                             <Link
+                              to={`/users/${article.author?.user_id}`}
+                              style={linkStyle}
+                              className="text-dark"
+                              key={article.author?.user_id}
+                             >
+                                <img src={article.author?.profile_image} style={imageStyle} />
+                                <span className="text-secondary pr-3">
+                                    {article.author?.firstname} {article.author?.lastname} 
+                                </span>
+                              </Link>
                             </div>
                             <h5 className='fw-light'>
                               {article.title}{" "}

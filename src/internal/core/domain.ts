@@ -25,4 +25,27 @@ export interface UserEntity {
 }
 
 
+export interface ArticleFormData {
+    title: string;
+    subtitle: string;
+    body: string;
+}
+
+export interface UserFormData {
+    firstname: string;
+    lastname: string;
+    email: string;
+    about : string;
+    profile_image: string
+    password: string
+}
+
+export interface PostResponse {
+    article_id:string
+}
+
+export interface ArticleList {
+    articles: ArticleEntity[];
+  }
+  
 

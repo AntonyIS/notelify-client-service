@@ -1,42 +1,34 @@
-import { ArticleEntity, UserEntity } from "../../core/domain"
+import { ArticleEntity, UserEntity ,ArticleFormData,PostResponse,UserFormData} from "../../core/domain"
 
+// Application envirnment i.e docker, development , production
 const ENV = process.env.REACT_APP_ENV
 
+// URL for the Article service
 let ARTICLES_URL=""
+// URL for the user  service
 let USERS_URL=""
+// URL for the logging service
+let LOGGING_URL=""
 
 if (ENV === "docker") {
     ARTICLES_URL="/v1/articles/"
     USERS_URL="/v1/users/"
+    LOGGING_URL="/v1/logging/"
 }else{
     ARTICLES_URL="http://127.0.0.1:8001/v1/articles/"
     USERS_URL="http://127.0.0.1:8000/v1/users/"
+    LOGGING_URL="http://127.0.0.1:8000/v1/logging/"
 }
 
 
-interface ArticleFormData {
-    title: string;
-    subtitle: string;
-    body: string;
-}
-
-interface UserFormData {
-    firstname: string;
-    lastname: string;
-    email: string;
-    about : string;
-    profile_image: string
-    password: string
-}
-
-interface postResponse {
-    article_id:string
-}
-
-export const  PostArticle = async (article:ArticleFormData): Promise <postResponse> => {
+// HTTP POST request 
+export const  PostArticle = async (article:ArticleFormData): Promise <PostResponse> => {
+    /*
+    Handles post request for article data posted by user
+    After a success data processing , data is send to the article service 
+    */
     try {
-        const URL = `${ARTICLES_URL}`
-        const response = await fetch(URL, {
+        const response = await fetch(ARTICLES_URL, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -57,12 +49,11 @@ export const  PostArticle = async (article:ArticleFormData): Promise <postRespon
 }
 // HTTP GET request for all articles
 export const  GetArticles = async () : Promise <ArticleEntity[]> => {
-    const URL = `${ARTICLES_URL}`
-  
+    /*
+    Makes a get request to the article service and returns all available articles from the article service
+    */
     try {
-        
-        const response = await fetch(URL)
-        
+        const response = await fetch(ARTICLES_URL)
         if (!response.ok) {
             console.log(`HTTP error!: ${response.status}`)
             throw new Error(`HTTP error!: ${response.status}`)
@@ -72,7 +63,6 @@ export const  GetArticles = async () : Promise <ArticleEntity[]> => {
         const allArticles = await Promise.all(
             articles.map(async (article:ArticleEntity) => {
                 const authorId = article.author_id
-                // Check if authorId is defined before using it
                 if (authorId !== undefined) {
                     const userData = await GetUser(authorId);
                     if (userData !== undefined) {
@@ -81,7 +71,6 @@ export const  GetArticles = async () : Promise <ArticleEntity[]> => {
                         return { ...article, author: {} };
                     }
                 } else {
-                    // Handle the case where authorId is undefined
                     console.error("Author ID is undefined");
                     return { ...article, author: {} };
                 }
@@ -93,10 +82,14 @@ export const  GetArticles = async () : Promise <ArticleEntity[]> => {
         throw new Error (`ERROR : ${error}`)
     }
 }
-// HTTP GET request for all articles
+// HTTP GET request for all articles by an author
 export const  GetAuthorArticles = async (user_id:String) : Promise <ArticleEntity[]> => {
+    /*
+    Given and authot/user ID, this function makes a GET request to the article service
+    */
     try {
-        const URL = `${ARTICLES_URL}author/${user_id}`
+        let URL = `${ARTICLES_URL}`
+        URL = `${ARTICLES_URL}author/${user_id}`
         const response = await fetch(URL)
 
         if (!response.ok) {
@@ -112,7 +105,6 @@ export const  GetAuthorArticles = async (user_id:String) : Promise <ArticleEntit
 
                     return article
                 } else {
-                    // Handle the case where authorId is undefined
                     console.error("Author ID is undefined");
                     return { ...article, author: {} };
                 }
@@ -126,8 +118,10 @@ export const  GetAuthorArticles = async (user_id:String) : Promise <ArticleEntit
 }
 // HTTP GET an Article
 export const GetArticle = async (article_id:string) : Promise <ArticleEntity> => {
-    const URL = `${ARTICLES_URL}${article_id}`
-   
+    /*
+    Makes a GET HTTP request to get an article with article_id
+    */
+   let URL = `${ARTICLES_URL}${article_id}`
     try {
         const response = await fetch(URL)
 
@@ -196,8 +190,7 @@ export const GetUserArticles = async (article_id:string) : Promise <ArticleEntit
 // HTTP GET request for all users
 export const  GetUsers = async () : Promise <UserEntity[] | { error: string}> => {
     try {
-        const URL = `${USERS_URL}`
-        const response = await fetch(URL)
+        const response = await fetch(USERS_URL)
 
         if (!response.ok) {
             throw new Error(`HTTP error!: ${response.status}`)

@@ -62,29 +62,28 @@ export  const ArticleHome:FC = () => {
             ) : (
                 <div>
                 <div className='row'>
-                        <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                            <div className="card mb-2 text-bg-light p-3" style={{border: "none"}}>
-                                <div className="card-body">
-                                    <h6 className='fw-light'>Draft an Article ?</h6>
-                                    <Link to={`/articles/draft`} style={linkStyle}>
-                                        <button className="btn btn-info fw-light" style={roundButton}>Draft</button>
-                                    </Link>
-                                    
-                                </div>
+                    <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                        <div className="card mb-2 text-bg-light p-3" style={{border: "none"}}>
+                            <div className="card-body">
+                                <h6 className='fw-light'>Draft an Article ?</h6>
+                                <Link to={`/articles/draft`} style={linkStyle}>
+                                    <button className="btn btn-info fw-light" style={roundButton}>Draft</button>
+                                </Link>
                             </div>
                         </div>
-                        <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                            
-                        </div>
                     </div>
-                    <div className='row'>
-                        <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                            <ArticleList articles={articles} />
-                        </div>
-                        <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                            <ContentRecommendations articles={articles} />
-                        </div>
+                    <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                        
                     </div>
+                </div>
+                <div className='row'>
+                    <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                        <ArticleList articles={articles} />
+                    </div>
+                    <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                        <ContentRecommendations articles={articles} />
+                    </div>
+                </div>
                 </div>
             )
         }
