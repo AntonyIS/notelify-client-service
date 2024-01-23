@@ -126,15 +126,19 @@ export  const ArticleDetails:FC = () => {
                                                 <div className="row">
                                                     <div className="col-3">
                                                         <div className="card text-bg-light" style={cardStyle}>
-                                                            <div className="">
                                                             <img src={article?.author?.profile_image} alt="" style={imageStyleLarge}  />
-                                                            </div>
+                                                            <Link
+                                                                to={`/users/${article?.author.user_id}`}
+                                                                style={linkStyle}
+                                                                className="text-dark"
+                                                                key={article?.author?.user_id}
+                                                                >
+                                                                <h6 className='fw-lighter'>Written by {article?.author.firstname} {article?.author.lastname}</h6>
+                                                                <h6 className='fw-lighter'>Email {article?.author.email}</h6>
+                                                            </Link>
                                                         </div>
                                                     </div>
-                                                    <div className="col-4">
-                                                        <h6 className='fw-lighter'>Written by {article?.author.firstname} {article?.author.lastname}</h6>
-                                                        <h6 className='fw-lighter'>Email {article?.author.email}</h6>
-                                                    </div>
+                                                   
                                                 </div>
                                                 <div className="row">
                                                     <p className='fw-lighter'>{article?.author.about}</p>
