@@ -161,10 +161,18 @@ export  const ArticleDetails:FC = () => {
                                                             <div className="card" style={cardStyle} key={articleItem.article_id}>
                                                                 <img src="/images/article.jpg" className="card-img-top" alt="..." />
                                                                 <div className="card-body p-1">
-                                                                    <img src={profileImage} style={imageStyle} />
-                                                                    <span className="text-secondary">
-                                                                        {username}
-                                                                    </span>
+                                                                <Link
+                                                                to={`/users/${article?.author.user_id}`}
+                                                                style={linkStyle}
+                                                                className="text-dark"
+                                                                key={article?.author?.user_id}
+                                                                >
+                                                                <img src={profileImage} style={imageStyle} />
+                                                                <span className="text-secondary">
+                                                                    {username}
+                                                                </span>
+                                                                </Link>
+                                                                    
                                                                     <h5 className="fw-light">
                                                                         {articleItem.title?.slice(0, 30)}...
                                                                     </h5>

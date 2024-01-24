@@ -11,13 +11,13 @@ let USERS_URL=""
 let LOGGING_URL=""
 
 if (ENV === "docker") {
-    ARTICLES_URL="/v1/articles/"
     USERS_URL="/v1/users/"
+    ARTICLES_URL="/v1/articles/"
     LOGGING_URL="/v1/logging/"
-}else{
-    ARTICLES_URL="http://127.0.0.1:8001/v1/articles/"
+}else if (ENV === "development"){
     USERS_URL="http://127.0.0.1:8000/v1/users/"
-    LOGGING_URL="http://127.0.0.1:8000/v1/logging/"
+    ARTICLES_URL="http://127.0.0.1:8001/v1/articles/"
+    LOGGING_URL="http://127.0.0.1:8002/v1/logging/"
 }
 
 
