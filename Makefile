@@ -1,10 +1,8 @@
 serve-dev:
-	NODE_ENV=development npm start
+	REACT_APP_ENV=development npm start
 
 serve-prod:
-	NODE_ENV=production npm start
-serve:
-	REACT_APP_ENV=development npm start
+	REACT_APP_ENV=production npm start
 
 docker-push:
 	docker build -t antonyinjila/notelify-client-service:latest --build-arg REACT_APP_ENV=docker .

@@ -1,5 +1,5 @@
 import React ,{FC,useState} from 'react';
-import { GetUser, GetUsers, PostArticle } from '../../http/api';
+import { GetUsers, PostArticle } from '../../http/api';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -84,7 +84,10 @@ export  const AddNewArticle:FC = () => {
                         let user = users[0]
                        
                         formData.author_id = user.user_id
-                        PostArticle(formData)
+                       
+                        const response = await PostArticle(formData);
+
+                        navigate(`/articles/${response.article_id}`);
                     }
                 }
             }
@@ -99,7 +102,6 @@ export  const AddNewArticle:FC = () => {
                     tags: [],
                 }
             )
-            // navigate(`/${response.article_id}`);
         }
 
     }
