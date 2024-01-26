@@ -16,6 +16,10 @@ const linkStyle = {
     borderRadius : '30%'
 };
 
+const cardStyle = {
+    border: 'none',
+};
+
 
 export  const ArticleHome:FC = () => {
     // Pull Articles from the articles service
@@ -62,8 +66,10 @@ export  const ArticleHome:FC = () => {
             ) : (
                 <div>
                 <div className='row'>
-                    <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                        <div className="card mb-2 text-bg-light p-3" style={{border: "none"}}>
+                    <div className="card mb-2" style={cardStyle}>
+                        <div className="card-body p-0">
+                        <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                        <div className="card mb-2 text-bg-light pb-3" style={{border: "none"}}>
                             <div className="card-body">
                                 <h6 className='fw-light'>Draft an Article ?</h6>
                                 <Link to={`/articles/draft`} style={linkStyle}>
@@ -75,6 +81,9 @@ export  const ArticleHome:FC = () => {
                     <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                         
                     </div>
+                        </div>
+                    </div>
+                    
                 </div>
                 <div className='row'>
                     <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">

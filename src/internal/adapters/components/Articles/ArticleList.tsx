@@ -41,36 +41,33 @@ export  const ArticleList:FC<ArticleList> = ({articles}) => {
                     key={article.article_id}
                   >
                     <div className="card mb-2" style={cardStyle}>
-                      <div className="card-body">
+                      <div className="card-body p-0">
                         <div className="row">
                           <div className="col-md-8">
-                            <div className="col-md-4">
-                             <Link
-                              to={`/users/${article.author?.user_id}`}
-                              style={linkStyle}
-                              className="text-dark"
-                              key={article.author?.user_id}
-                             >
-                                <img src={article.author?.profile_image} style={imageStyle} />
-                                <span className="text-secondary pr-3">
-                                    {article.author?.firstname} {article.author?.lastname} 
-                                </span>
-                              </Link>
-                            </div>
-                            <h5 className='fw-light'>
-                              {article.title}{" "}
-                              <span style={headStringStlye}>
-                                {article.publish_date?.slice(0, 10)}
-                              </span>{" "}
-                            </h5>
-                            <div className="mb-2">
-                              
-                            </div>
-                            <p className="fw-lighter">
-                              {article.body?.slice(0, 200)}...
-                            </p>
+                              <Link
+                                to={`/users/${article.author?.user_id}`}
+                                style={linkStyle}
+                                className="text-dark"
+                                key={article.author?.user_id}
+                              >
+                                  <img src={article.author?.profile_image} style={imageStyle} />
+                                  <span className="text-secondary pr-3">
+                                      {article.author?.firstname} {article.author?.lastname} 
+                                  </span>
+                                </Link>
+                           
+                              <h5 className='fw-light'>
+                                {article.title}{" "}
+                                <span style={headStringStlye}>
+                                  {article.publish_date?.slice(0, 10)}
+                                </span>{" "}
+                              </h5>
+                  
+                              <p className="fw-lighter">
+                                {article.body?.slice(0, 200)}...
+                              </p>
                           </div>
-                          <div className="col-md-4">
+                          <div className="col-md-4 p-0">
                             <img src="/images/article.jpg" className="img-fluid float-left" alt="..." style={ArticleimageStyle} />
                           </div>
                         </div>

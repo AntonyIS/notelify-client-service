@@ -1,4 +1,6 @@
-import { ArticleEntity, UserEntity ,ArticleFormData,PostResponse,UserFormData} from "../../core/domain"
+import { ArticleEntity, UserEntity ,ArticleFormData,PostResponse,UserFormData, LogMessage} from "../../core/domain"
+import LogMessageService from "../../core/services"
+
 
 // Application envirnment i.e docker, development , production
 const ENV = process.env.REACT_APP_ENV
@@ -13,13 +15,15 @@ let LOGGING_URL=""
 if (ENV === "docker") {
     USERS_URL="/v1/users/"
     ARTICLES_URL="/v1/articles/"
-    LOGGING_URL="/v1/logging/"
+    LOGGING_URL="/v1/logging/client"
 }else if (ENV === "development"){
     USERS_URL="http://127.0.0.1:8000/v1/users/"
     ARTICLES_URL="http://127.0.0.1:8001/v1/articles/"
-    LOGGING_URL="http://127.0.0.1:8002/v1/logging/"
+    LOGGING_URL="http://127.0.0.1:8002/v1/logging/client"
 }
 
+
+const logService = new LogMessageService(LOGGING_URL)
 
 // HTTP POST request 
 export const  PostArticle = async (article:ArticleFormData): Promise <PostResponse> => {
@@ -37,13 +41,34 @@ export const  PostArticle = async (article:ArticleFormData): Promise <PostRespon
         });
 
         if (!response.ok) {
+            const logPayload: LogMessage = {
+                Message : "Network response was not ok",
+                LogLevel : "",
+                Service : ""
+    
+            }
+            logService.LogError(logPayload)
             throw new Error('Network response was not ok');
         }
         const responseData = await response.json();
+        const logPayload: LogMessage = {
+            Message : "Article created successfuly",
+            LogLevel : "",
+            Service : ""
+
+        }
+        logService.LogInfo(logPayload)
         return {
             "article_id" :responseData.article_id
         }
     }catch (error) {
+        const logPayload: LogMessage = {
+            Message : `ERROR : ${error}`,
+            LogLevel : "",
+            Service : ""
+
+        }
+        logService.LogError(logPayload)
         throw new Error (`ERROR : ${error}`)
     }
 }
@@ -56,6 +81,13 @@ export const  GetArticles = async () : Promise <ArticleEntity[]> => {
         const response = await fetch(ARTICLES_URL)
         if (!response.ok) {
             console.log(`HTTP error!: ${response.status}`)
+            const logPayload: LogMessage = {
+                Message : `HTTP error!: ${response.status}`,
+                LogLevel : "",
+                Service : ""
+    
+            }
+            logService.LogError(logPayload)
             throw new Error(`HTTP error!: ${response.status}`)
         }
         const articles = await response.json()
@@ -72,13 +104,26 @@ export const  GetArticles = async () : Promise <ArticleEntity[]> => {
                     }
                 } else {
                     console.error("Author ID is undefined");
+                    const logPayload: LogMessage = {
+                        Message :"Author ID is undefined",
+                        LogLevel : "",
+                        Service : ""
+            
+                    }
+                    logService.LogError(logPayload)
                     return { ...article, author: {} };
                 }
             })
         );
         return allArticles
     }catch (error) {
-      
+        const logPayload: LogMessage = {
+            Message :`ERROR : ${error}`,
+            LogLevel : "",
+            Service : ""
+
+        }
+        logService.LogError(logPayload)
         throw new Error (`ERROR : ${error}`)
     }
 }
@@ -93,6 +138,13 @@ export const  GetAuthorArticles = async (user_id:String) : Promise <ArticleEntit
         const response = await fetch(URL)
 
         if (!response.ok) {
+            const logPayload: LogMessage = {
+                Message :`HTTP error!: ${response.status}`,
+                LogLevel : "",
+                Service : ""
+    
+            }
+            logService.LogError(logPayload)
             throw new Error(`HTTP error!: ${response.status}`)
         }
         const articles = await response.json()

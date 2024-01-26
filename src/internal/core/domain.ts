@@ -46,6 +46,11 @@ export interface PostResponse {
 
 export interface ArticleList {
     articles: ArticleEntity[];
-  }
+}
   
 
+export interface LogMessage {
+    LogLevel : string;
+    Message : string;
+    Service : string
+}
