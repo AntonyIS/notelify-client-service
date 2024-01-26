@@ -1,7 +1,7 @@
 import React ,{FC, useEffect, useState} from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { GetArticle, GetAuthorArticles } from '../../http/api';
-import { ArticleEntity, UserEntity} from '../../../core/domain';
+import { ArticleEntity} from '../../../core/domain';
 import { ResponsePage } from '../ResponsePages/ResponsePage';
 
 
@@ -43,7 +43,7 @@ export  const ArticleDetails:FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                if (article_id == undefined) {
+                if (article_id === undefined) {
                     setError("Undefined Article");
                 } else {
                     const articleData = await GetArticle(article_id);
@@ -98,7 +98,7 @@ export  const ArticleDetails:FC = () => {
                                         </div>
                                     </Link>
                                     
-                                    <img src={"/images/article.jpg"}  className="img-fluid mb-2"/>
+                                    <img src={"/images/article.jpg"}  className="img-fluid mb-2" alt=""/>
 
                                     <h6 className='display-6 fw-light'>{article?.subtitle}</h6>
                                     <p className='fw-lighter'>{article?.body}</p>
@@ -167,7 +167,7 @@ export  const ArticleDetails:FC = () => {
                                                                 className="text-dark"
                                                                 key={article?.author?.user_id}
                                                                 >
-                                                                <img src={profileImage} style={imageStyle} />
+                                                                <img src={profileImage} style={imageStyle} alt="" />
                                                                 <span className="text-secondary">
                                                                     {username}
                                                                 </span>

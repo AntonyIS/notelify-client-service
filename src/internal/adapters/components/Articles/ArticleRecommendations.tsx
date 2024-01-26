@@ -1,4 +1,4 @@
-import React ,{FC, useEffect, useState} from 'react';
+import React ,{FC} from 'react';
 import { Link } from 'react-router-dom';
 import { ArticleEntity } from '../../../core/domain';
 
@@ -6,16 +6,10 @@ interface ArticleList {
     articles: ArticleEntity[];
 }
 
-
-
-
 const linkStyle = {
     textDecoration: 'none',
     color:"#00000"
 };
-const headStringStlye = {
-    fontSize:"10px"
-}
 
 
 const cardStyle = {
@@ -53,7 +47,7 @@ export  const ContentRecommendations:FC<ArticleList>= ({articles}) => {
                                     className="text-dark"
                                     key={article.author?.user_id}
                                 >
-                                    <img src={article.author?.profile_image} style={imageStyle} />
+                                    <img src={article.author?.profile_image} style={imageStyle} alt=""/>
                                     <span className="text-secondary pr-3">
                                         {article.author?.firstname} {article.author?.lastname}
                                     </span>

@@ -13,9 +13,6 @@ const navbarStyle = {
     borderBottom: '1px solid #dee2e6'
 }
 
-const roundButton = {
-    borderRadius: "60px"
-}
 
 export  const Navbar:FC = () => {
     return (

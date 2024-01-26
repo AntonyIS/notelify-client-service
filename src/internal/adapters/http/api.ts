@@ -220,7 +220,7 @@ export const PostUser = async (): Promise<void> => {
             throw new Error('Network response was not ok');
         }
         const responseData = await response.json();
-       
+        console.log(responseData)
     }catch (error) {
         throw new Error (`ERROR : ${error}`)
     }

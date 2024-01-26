@@ -1,6 +1,6 @@
 import React ,{FC, useEffect, useState} from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { GetArticle, GetAuthorArticles, GetUser } from '../../http/api';
+import { useParams } from 'react-router-dom';
+import { GetAuthorArticles, GetUser } from '../../http/api';
 import { ArticleEntity, UserEntity} from '../../../core/domain';
 import { ResponsePage } from '../ResponsePages/ResponsePage';
 import { ArticleList } from '../Articles/ArticleList';
@@ -30,7 +30,7 @@ export  const UserDetails:FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                if (user_id == undefined) {
+                if (user_id === undefined) {
                     setError("Undefined user");
                 } else {
                     const userData = await GetUser(user_id);
@@ -95,7 +95,7 @@ export  const UserDetails:FC = () => {
                             <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 <div className="card mb-2  p-0" style={{border: "none"}}>
                                     <div className="card-body fw-light">
-                                        <img src={user?.profile_image} style={imageStyle} />
+                                        <img src={user?.profile_image} style={imageStyle} alt="" />
                                         <h6 className="">
                                             {user?.firstname} {user?.lastname}
                                         </h6>

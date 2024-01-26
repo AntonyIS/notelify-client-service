@@ -33,7 +33,7 @@ export  const ArticleHome:FC = () => {
             const articlesData = await GetArticles();
             if ('error' in articlesData) {
                 setError(`Internal server error ${articlesData.error}`);
-            } else if(articlesData.length == 0 ){
+            } else if(articlesData.length === 0 ){
                 const users = await GetUsers()
               
                 if ('error' in articlesData) {

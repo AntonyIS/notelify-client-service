@@ -11,7 +11,7 @@ class LogMessageService  {
     SendLog(LogPayload: LogMessage): void {
         const dateString = "2024/01/25 21:34:36";
         const dateTime = new Date(dateString);
-        const logEntry = `[${this.Service}] [Client] ${dateTime} ${LogPayload.Message}`
+        // const logEntry = `[${this.Service}] [Client] ${dateTime} ${LogPayload.Message}`
         LogPayload.Message = `[${this.Service}] [${dateTime}] ${LogPayload.Message}`
         try {
             const response =  fetch(this.logURL, {
@@ -21,7 +21,7 @@ class LogMessageService  {
                 },
                 body: JSON.stringify(LogPayload),
             });
-    
+            console.log(response)
         }catch (error) {
             throw new Error (`ERROR : ${error}`)
         }
