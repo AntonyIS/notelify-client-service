@@ -1,9 +1,10 @@
 import React ,{FC, useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
-import { GetAuthorArticles, GetUser } from '../../http/api';
-import { ArticleEntity, UserEntity} from '../../../core/domain';
-import { ResponsePage } from '../ResponsePages/ResponsePage';
-import { ArticleList } from '../Articles/ArticleList';
+import { ResponsePage } from '../components/ResponsePage';
+import { FetchUser, FetchUserPosts } from '../Services/apiService';
+import { Post, User } from '../Types/Types';
+import { PostList } from '../components/PostList';
+import { RoundButton } from '../Styles/Styles';
 
 
 
@@ -15,16 +16,10 @@ const imageStyle = {
 }
 
 
-const roundButton = {
-    borderRadius: "60px"
-}
-
-export  const UserDetails:FC = () => {
-    // Get user ID from URL params
+export  const UserProfile:FC = () => {
     const { user_id } = useParams<string>();
-    // Get user using user_id 
-    const [user, setUser] = useState<UserEntity>()
-    const [articles, setArticles] = useState<ArticleEntity[]>([])
+    const [user, setUser] = useState<User>()
+    const [posts, setPosts] = useState<Post[]>([])
     const [error, setError] = useState("");
    
     useEffect(() => {
@@ -33,10 +28,10 @@ export  const UserDetails:FC = () => {
                 if (user_id === undefined) {
                     setError("Undefined user");
                 } else {
-                    const userData = await GetUser(user_id);
-                    const authorArticles = await GetAuthorArticles(userData.user_id);
+                    const userData = await FetchUser(user_id);
+                    const authorPosts = await FetchUserPosts(userData.user_id);
                     setUser(userData);
-                    setArticles(authorArticles);
+                    setPosts(authorPosts);
                 }
             } catch (error) {
                 setError(`An error occurred: ${error}`);
@@ -60,14 +55,14 @@ export  const UserDetails:FC = () => {
                             <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                                 <div className="card" style={{border: "none"}}>
                                     <div className="card-body p-0 mb-3">
-                                        <h1 className="fw-light display-6">
+                                        <h1 className="display-6">
                                             {user?.firstname} {user?.lastname}
                                         </h1>
-                                        <h4 className='fw-light'>
+                                        <h4>
                                             {user?.about}
                                         </h4>
-                                        <p className='fw-light'>Followers {user?.followers} Following {user?.following}</p>
-                                        <button className="btn btn-info fw-light" style={roundButton}>Follow</button>
+                                        <p>Followers {user?.followers} Following {user?.following}</p>
+                                        <button className="btn btn-info" style={RoundButton}>Follow</button>
                                     </div>
                                 </div>
                                 <hr />
@@ -77,15 +72,9 @@ export  const UserDetails:FC = () => {
                                             <li className="nav-item">
                                                 <a className="nav-link active" aria-current="page" href="#user-home-tab">Home</a>
                                             </li>
-                                            {/* <li className="nav-item">
-                                                <a className="nav-link" href="#user-about-tab">About</a>
-                                            </li> */}
                                         </ul>
                                         <div id="user-home-tab">
-                                            <ArticleList articles={articles} />
-                                        </div>
-                                        <div id="user-about-tab">
-                                            {/* <ArticleList articles={articles} /> */}
+                                            <PostList posts={posts} />
                                         </div>
                                     </div>
                                 </div>
@@ -94,12 +83,13 @@ export  const UserDetails:FC = () => {
                             </div>
                             <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 <div className="card mb-2  p-0" style={{border: "none"}}>
-                                    <div className="card-body fw-light">
+                                    <div className="card-body">
                                         <img src={user?.profile_image} style={imageStyle} alt="" />
                                         <h6 className="">
                                             {user?.firstname} {user?.lastname}
                                         </h6>
-                                        <p>{user?.followers} Followers</p>
+                                        <p>
+                                            {user?.followers} Followers</p>
                                         <p>
                                             {user?.about}
                                         </p>

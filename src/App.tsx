@@ -1,22 +1,21 @@
 import React ,{FC} from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Navbar } from './internal/adapters/components/Navbar/Navbar';
-import { HomePage } from './Pages/HomePage';
-import { ArticleDetails } from './internal/adapters/components/Articles/ArticleDetails';
-import { AddNewArticle } from './internal/adapters/components/Articles/AddNewArticle';
-import { UserDetails } from './internal/adapters/components/Users/UserDetails';
+import { Home } from './Pages/Home';
+import { CreatePost } from './Pages/CreatePost';
+import { PostDetails } from './Pages/PostDetails';
+import { UserProfile } from './Pages/UserProfile';
+import { Header } from './components/Header';
 
 const App:FC = ()  =>{
-
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+        <Header />
         <Routes>
-            <Route path="/" element={<HomePage/>}/>
-            <Route path="/articles/:article_id" element={<ArticleDetails/>}/>
-            <Route path="/articles/draft" element={<AddNewArticle/>}/>
-            <Route path="/users/:user_id" element={<UserDetails/>}/>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/posts/:article_id" element={<PostDetails/>}/>
+            <Route path="/posts/draft" element={<CreatePost/>}/>
+            <Route path="/users/:user_id" element={<UserProfile/>}/>
         </Routes>
       </BrowserRouter>
     </div>

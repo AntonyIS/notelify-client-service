@@ -1,16 +1,21 @@
-export interface ArticleEntity {
+export interface Post {
     article_id    :string;
     title         :string;
     subtitle      :string;
     introduction  :string;
     body          :string;
     tags          :string[];
-    publish_date  :string;
+    publish_date  :null ;
+    updated_date  :null;
     author_id     :string;
-    author        : UserEntity ;
+    author          :User ;
 }
 
-export interface UserEntity {
+export interface Posts {
+    posts: Post[]
+}
+
+export interface User {
     user_id        :string;
     firstname      :string;
     lastname       :string;
@@ -24,8 +29,11 @@ export interface UserEntity {
     followers      :number;
 }
 
+export interface Users {
+    users: User[]
+}
 
-export interface ArticleFormData {
+export interface PostFormData {
     title: string;
     subtitle: string;
     body: string;
@@ -44,13 +52,27 @@ export interface PostResponse {
     article_id:string
 }
 
-export interface ArticleList {
-    articles: ArticleEntity[];
-}
-  
-
 export interface LogMessage {
     LogLevel : string;
     Message : string;
     Service : string
 }
+
+export interface CodeResponse {
+    code : string
+}
+
+export interface FormErrors {
+    title: string;
+    subtitle: string;
+    body: string;
+}
+
+export interface FormData {
+    author_id: string;
+    title: string;
+    subtitle: string;
+    body: string;
+    tags: string[]
+}
+
