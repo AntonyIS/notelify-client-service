@@ -1,4 +1,3 @@
-// src/components/LoginButton.tsx
 import React, { useEffect } from 'react';
 import { HandleGitHubCallback, InitiateGitHubLogin } from '../Services/authService';
 import { RoundButton } from '../Styles/Styles';

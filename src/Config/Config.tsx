@@ -1,9 +1,6 @@
 const ENV = process.env.REACT_APP_ENV
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
 
-console.log(ENV)
-console.log(CLIENT_ID)
-
 let USERS_URL="/users/v1";
 let ARTICLES_URL="/articles/v1";
 let LOGGING_URL="/logging/v1/client";
