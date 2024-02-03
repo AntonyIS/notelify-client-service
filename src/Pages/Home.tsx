@@ -17,20 +17,17 @@ export const Home:FC = () => {
             const fetchPosts = async () => {
                 const postsResponse = await FetchPosts()
                 if (postsResponse.error){
-                    console.error(postsResponse.error);
                     setError(postsResponse.error)
                 }else{
                     setPosts(postsResponse.posts || [])
                     setIsLoggedIn(true)
                     setError("")
-                }
-                
+                } 
             }   
             fetchPosts()
         }catch(error){
-            setError(`Error reading posts : ${error}`)
             console.log(error)
-            throw new Error (`ERROR : ${error}`)
+            setError(`Error fetching posts : ${error}`)
         }
     }, [])
     

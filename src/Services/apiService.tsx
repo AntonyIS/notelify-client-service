@@ -1,7 +1,7 @@
 import { ARTICLES_URL, USERS_URL } from "../Config/Config";
 import { Post, User} from "../Types/Types";
 
-export const CreateNewPost = async (post:Post): Promise<string> => {
+export const CreateNewPost = async (post:Post): Promise<{post_id?: string, error?:string}> => {
     try{
         const response = await fetch(`${ARTICLES_URL}/`, {
             method: "POST",
@@ -11,12 +11,11 @@ export const CreateNewPost = async (post:Post): Promise<string> => {
 
         if (!response.ok){
             console.log("Network response was not ok")
-            throw new Error('Network response was not ok');
+            return {post_id:"", error: "Network response was not ok"}
         }
 
         const payload:Post = await response.json()
-        const post_id:string = payload.article_id 
-        return post_id
+        return {post_id:payload.article_id , error: undefined}
 
     }catch(error){
         console.log(error)
@@ -24,18 +23,18 @@ export const CreateNewPost = async (post:Post): Promise<string> => {
     }
 }
 
-export const FetchPost = async (articleID:string): Promise<Post>=>{
+export const FetchPost = async (articleID:string): Promise<{ post?: Post,error?: string }>=>{
     try {
         const response = await fetch(`${ARTICLES_URL}/${articleID}`)
         if (!response.ok){
             console.log("Error: unable to fetch articles")
-            throw new Error(`HTTP error!: ${response.status}`)
+            return { post: undefined, error: "Error: unable to fetch posts" };
         }
         const post:Post = await response.json()
-        return post
+        return { post: post, error: undefined };
     }catch(error){
         console.log(error)
-        throw new Error (`ERROR : ${error}`)
+        return { post: undefined, error: "Internal Server Error!" };
     }
 }
 
@@ -43,43 +42,43 @@ export const FetchPosts = async (): Promise<{ posts?: Post[], error?: string }> 
     try {
         const response = await fetch(`${ARTICLES_URL}/`)
         if (!response.ok){
-            console.log("Error: unable to fetch articles")
-            throw new Error(`HTTP error!: ${response.status}`)
+            console.log("Error: unable to fetch posts");
+            return { posts: undefined, error: "Error: unable to fetch posts" };
         }
         const res = await response.json()
-        const articles:Post[] = await Promise.all(
+        const posts:Post[] = await Promise.all(
             res.map(async (article:Post)=>{
                 return {...article}
             })
         )
-        return { posts: articles, error: undefined };
+        return { posts: posts, error: undefined };
     }catch(error) {
         console.log(error)
         return { posts: undefined, error: "Internal Server Error!" };
     }
 }
 
-export const FetchUserPosts = async (author_id:string): Promise<Post[]>=>{
+export const FetchUserPosts = async (author_id:string): Promise<{ posts?: Post[], error?: string }>=>{
     try {
         const response = await fetch(`${ARTICLES_URL}/author/${author_id}`)
         if (!response.ok){
-            console.log("Error: unable to fetch articles")
-            throw new Error(`HTTP error!: ${response.status}`)
+            console.log("Error: unable to fetch posts");
+            return { posts: undefined, error: "Error: unable to fetch posts" };
         }
-        const post:Post[] = await response.json()
-        return post
+        const posts:Post[] = await response.json()
+        return { posts: posts, error: undefined };
     }catch(error){
         console.log(error)
-        throw new Error (`ERROR : ${error}`)
+        return { posts: undefined, error: "Internal Server Error!" };
     }
 }
 
-export const FetchUsers = async (): Promise <User[]> => {
+export const FetchUsers = async (): Promise <{users?: User[], error?:string}> => {
     try {
         const response = await fetch(`${USERS_URL}/`)
         if (!response.ok){
             console.log("Error: unable to fetch users")
-            throw new Error(`HTTP error!: ${response.status}`)
+            return { users:undefined, error: "Error: unable to fetch users"}
         }
         const res = await response.json()
         const users = await Promise.all(
@@ -87,26 +86,25 @@ export const FetchUsers = async (): Promise <User[]> => {
                 return {...article}
             })
         )
-
-        return users
+        return { users:users, error: undefined}
     }catch(error) {
         console.log(error)
-        throw new Error (`ERROR : ${error}`)
+        return { users: undefined, error: "Internal Server Error!" };
     }
 }
 
-export const FetchUser = async (userID:string): Promise<User>=>{
+export const FetchUser = async (userID:string): Promise<{user?: User, error?:string}>=>{
     try {
         const response = await fetch(`${USERS_URL}/${userID}`)
         if (!response.ok){
             console.log("Error: unable to fetch user")
-            throw new Error(`HTTP error!: ${response.status}`)
+            return {user: undefined, error: "Error: unable to fetch user"}
         }
         const user:User = await response.json()
-        return user
+        return {user: user, error: undefined}
     }catch(error){
         console.log(error)
-        throw new Error (`ERROR : ${error}`)
+        return { user: undefined, error: "Internal Server Error!" };
     }
 }
 

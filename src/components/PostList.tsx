@@ -15,9 +15,9 @@ export const PostList:FC<Posts> = ({posts}) => {
                                     <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                                         <Link to={`/users/${post.author_id}`} style={LinkStyle} key={post.article_id} className="text-dark">
                                             <img 
-                                                src="https://media.licdn.com/dms/image/D4D03AQGU0BGeCfHasQ/profile-displayphoto-shrink_200_200/0/1693855758295?e=1710374400&v=beta&t=PAreRp1IorvWM8bSjIx7_DSzQdX0AhWWXp75lAYxepc" 
+                                                src="https://media.licdn.com/dms/image/D4D03AQHxabz4XmY-cg/profile-displayphoto-shrink_200_200/0/1706858865855?e=1712188800&v=beta&t=ocQIemmfhPCtbB1eQdesHsX5_t-LeeJnm2L0jiIEZg0" 
                                                 style={ImageStyle} 
-                                                alt={post.author?.profile_image}
+                                                alt={post.author?.firstname}
                                             />
                                             <span className="text-secondary pr-3">
                                                 {post.author?.firstname} {post.author?.lastname} 
