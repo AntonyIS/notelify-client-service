@@ -23,24 +23,35 @@ export  const UserProfile:FC = () => {
     const [error, setError] = useState("");
    
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                if (user_id === undefined) {
-                    setError("Undefined user");
-                } else {
-                    const userData = await FetchUser(user_id);
-                    const authorPosts = await FetchUserPosts(userData.user_id);
-                    setUser(userData);
-                    setPosts(authorPosts);
+        if (user_id === undefined){
+            console.log("Post ID is undefined")
+            setError("Post ID is undefined")
+        }else{
+            const fetchPost = async () => {
+                const postResponse = await FetchUser(user_id)
+                if (postResponse.error){
+                    console.log(postResponse.error)
+                }else{
+                    setUser(postResponse.user)
+                    setError("")
                 }
-            } catch (error) {
-                setError(`An error occurred: ${error}`);
             }
-        };
-    
-        fetchData();
-    }, [user_id]);
+            fetchPost()
 
+            const fetchPosts = async () => {
+                const postsResponse = await FetchUserPosts(user_id)
+                if (postsResponse.error){
+                    console.log(postsResponse.error)
+                    setError(postsResponse.error)
+                }else{
+                    setPosts(postsResponse.posts || [])
+                    setError("")
+                } 
+            }   
+            fetchPosts()
+        }
+
+    }, [user_id]);
     return (
         <>
         {

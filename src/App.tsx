@@ -13,7 +13,7 @@ const App:FC = ()  =>{
         <Header />
         <Routes>
             <Route path="/" element={<Home/>}/>
-            <Route path="/posts/:article_id" element={<PostDetails/>}/>
+            <Route path="/posts/:post_id" element={<PostDetails/>}/>
             <Route path="/posts/draft" element={<CreatePost/>}/>
             <Route path="/users/:user_id" element={<UserProfile/>}/>
         </Routes>

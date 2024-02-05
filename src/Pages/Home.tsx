@@ -13,10 +13,12 @@ export const Home:FC = () => {
 
 
     useEffect(() => {
+
         try {
             const fetchPosts = async () => {
                 const postsResponse = await FetchPosts()
                 if (postsResponse.error){
+                    console.log(postsResponse.error)
                     setError(postsResponse.error)
                 }else{
                     setPosts(postsResponse.posts || [])

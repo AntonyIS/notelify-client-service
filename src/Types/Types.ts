@@ -22,7 +22,7 @@ export interface User {
     email          :string;
     handle         :string;
     about          :string;
-    articles       :string;
+    articles       :Post[];
     password       :string;
     profile_image  :string;
     following      :number;

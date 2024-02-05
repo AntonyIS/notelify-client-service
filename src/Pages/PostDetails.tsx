@@ -7,37 +7,54 @@ import { ResponsePage } from '../components/ResponsePage';
 
 
 export  const PostDetails:FC = () => {
-    const { article_id } = useParams<string>();
+    const { post_id } = useParams<string>();
     const [post, setPost] = useState<Post>()
     const [posts, setPosts] = useState<Post[]>([])
     const [error, setError] = useState("");
    
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                if (article_id === undefined) {
-                    setError("Undefined Article");
-                } else {
-                    const postData:Post = await FetchPost(article_id)
-                    const postsData: Post[] = await FetchUserPosts(postData.author_id)
+        if (post_id === undefined){
+            console.log("Post ID is undefined")
+            setError("Post ID is undefined")
+        }else{
+            const fetchPost = async () => {
+                const postResponse = await FetchPost(post_id)
+                if (postResponse.error){
+                    console.log(postResponse.error)
+                    setError(postResponse.error)
+                }else{
+                    setPost(postResponse.post)
 
-                    setPost(postData)
-                    setPosts(postsData)
+                    if (postResponse.post?.author_id !== undefined) {
+                        const postsResponse = await FetchUserPosts(postResponse.post?.author_id);
+                        if (postsResponse.error) {
+                            console.log(postsResponse.error);
+                            setError(postsResponse.error);
+                        } else {
+                            setPosts(postsResponse.posts || []);
+                            setError("");
+                        }
+                    } else {
+                        console.error("user_id is undefined");
+                    }
+                    
+                    setError("");
                 }
-            } catch (error) {
-                setError(`An error occurred: ${error}`);
             }
-        };
-    
-        fetchData();
-    }, [article_id]);
+            
+            fetchPost()
+            
+           
+        }
+
+    }, [post_id]);
 
     return (
         <>
         {
             error ? (
                 <div>
-                     <ResponsePage message="Article not found" statusCode={"404"} />
+                     <ResponsePage message="Post not found" statusCode={"404"} />
                 </div>
             ):(
                 <div>
@@ -52,7 +69,10 @@ export  const PostDetails:FC = () => {
                                     <Link to={`/users/${post?.author_id}`} style={LinkStyle} className='text-dark'>
                                         <div className='mb-3 fw-lighter'>
                                             <span className='mr-3'>
-                                                <img src={post?.author?.profile_image} alt="" style={ImageStyle} />
+                                                <img 
+                                                    src="https://media.licdn.com/dms/image/D4D03AQHxabz4XmY-cg/profile-displayphoto-shrink_200_200/0/1706858865855?e=1712188800&v=beta&t=ocQIemmfhPCtbB1eQdesHsX5_t-LeeJnm2L0jiIEZg0" 
+                                                    alt="" style={ImageStyle} 
+                                                />
                                             </span>
                                             <span>
                                                 {post?.author.firstname} {post?.author.lastname}
@@ -95,7 +115,10 @@ export  const PostDetails:FC = () => {
                                                 <div className="row">
                                                     <div className="col-3">
                                                         <div className="card text-bg-light" style={BorderLessCard}>
-                                                            <img src={post?.author?.profile_image} alt="" style={PostDetailsImageStyle}  />
+                                                            <img 
+                                                                src="https://media.licdn.com/dms/image/D4D03AQHxabz4XmY-cg/profile-displayphoto-shrink_200_200/0/1706858865855?e=1712188800&v=beta&t=ocQIemmfhPCtbB1eQdesHsX5_t-LeeJnm2L0jiIEZg0" 
+                                                                alt="" style={PostDetailsImageStyle} 
+                                                            />
                                                             <Link
                                                                 to={`/users/${post?.author_id}`}
                                                                 style={LinkStyle}
@@ -131,7 +154,10 @@ export  const PostDetails:FC = () => {
                                                                 className="text-dark"
                                                                 key={postItem?.author?.user_id}
                                                                 >
-                                                                    <img src={post?.author.profile_image} style={ImageStyle} alt="" />
+                                                                    <img 
+                                                                        src="https://media.licdn.com/dms/image/D4D03AQHxabz4XmY-cg/profile-displayphoto-shrink_200_200/0/1706858865855?e=1712188800&v=beta&t=ocQIemmfhPCtbB1eQdesHsX5_t-LeeJnm2L0jiIEZg0" 
+                                                                        style={ImageStyle} alt="" 
+                                                                    />
                                                                     <span className="text-secondary">
                                                                         {post?.author.firstname} {post?.author.lastname}
                                                                     </span>
