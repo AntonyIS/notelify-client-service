@@ -7,6 +7,10 @@ export const RoundButton = {
     borderRadius: "60px"
 }
 
+export const SearchRoundButton = {
+    borderRadius: "60px"
+}
+
 export const NavbarStyle = {
     border: 'none',
     borderBottom: '1px solid #dee2e6'
