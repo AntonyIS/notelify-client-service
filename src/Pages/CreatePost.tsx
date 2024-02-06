@@ -21,7 +21,6 @@ export  const CreatePost:FC = () => {
         body: ''
     })  
     const [error, setError] = useState<string>("")  
-    const [users, setUsers] = useState<User[]>()  
     const handleInputChange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -56,7 +55,7 @@ export  const CreatePost:FC = () => {
                     console.log(usersResponse.error)
                     setError(usersResponse.error)
                 }else{
-                    setUsers(usersResponse.users || [])
+                    
                     if (usersResponse.users){
                         if (usersResponse.users.length > 0) {
                             let user:User = usersResponse.users[0]

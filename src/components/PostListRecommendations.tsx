@@ -25,14 +25,12 @@ export const PostListRecommendations:FC<Posts> = ({posts}) => {
                                         </Link>
                                         <>
                                             <h5 className="fw-light">
-                                                {post.title.slice(0,30)} {"..."}
+                                                {post.title}
                                                 <p style={{"fontSize": "10px"}}>
                                                   
                                                 </p> {" "}
                                             </h5>
-                                            <p className="fw-lighter">
-                                                {post.body?.slice(0, 200)}...
-                                            </p>
+    
                                         </>
                                     </div>
                                 </div>
