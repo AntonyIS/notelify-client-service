@@ -75,7 +75,21 @@ export const FetchUserPosts = async (author_id:string): Promise<{ posts?: Post[]
         return { posts: undefined, error: "Internal Server Error!" };
     }
 }
-
+export const DeletePost = async (articleID:string): Promise<{error?: string }>=>{
+    try {
+        const response = await fetch(`${POSTS_URL}${articleID}`, {
+            method: 'DELETE',
+          });
+        if (!response.ok){
+            console.log("Error: unable to delete articles")
+            return { error: "Error: unable to delete posts" };
+        }
+        return {error: undefined };
+    }catch(error){
+        console.log(error)
+        return {error: "Internal Server Error!" };
+    }
+}
 export const CreateNewUser = async (user:User): Promise<{user_id?: string, error?:string}> => {
     try{
         const response = await fetch(`${USERS_URL}`, {

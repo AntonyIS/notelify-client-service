@@ -2,9 +2,9 @@ import { FC, useEffect, useState } from "react";
 import { Post } from "../Types/Types";
 import { FetchPosts } from "../Services/apiService";
 import { DraftPost } from "../components/DraftPost";
-import { PostList } from "../components/PostList";
 import { PostListRecommendations } from "../components/PostListRecommendations";
 import { ResponsePage } from "../components/ResponsePage";
+import { PostList } from "../components/Posts/PostList";
 
 export const Home:FC = () => {
     const [posts,setPosts] = useState<Post[]>([])

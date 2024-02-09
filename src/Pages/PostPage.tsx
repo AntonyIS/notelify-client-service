@@ -4,10 +4,13 @@ import { FetchPost,FetchUserPosts } from '../Services/apiService';
 import { Post } from '../Types/Types';
 import { BorderLessCard, ImageStyle, LinkStyle, PostDetailsImageStyle, RoundButton } from '../Styles/Styles';
 import { ResponsePage } from '../components/ResponsePage';
+import { PostCard } from '../components/Posts/PostCard';
 
 
-export  const PostDetails:FC = () => {
-    const { post_id } = useParams<string>();
+
+
+export  const PostPage:FC = () => {
+    const { post_id = "" } = useParams<{ post_id?: string }>();
     const [post, setPost] = useState<Post>()
     const [posts, setPosts] = useState<Post[]>([])
     const [error, setError] = useState("");
@@ -31,6 +34,7 @@ export  const PostDetails:FC = () => {
                             console.log(postsResponse.error);
                             setError(postsResponse.error);
                         } else {
+                            console.log(postsResponse.posts)
                             setPosts(postsResponse.posts || []);
                             setError("");
                         }
@@ -122,13 +126,10 @@ export  const PostDetails:FC = () => {
                                             
                                         </div>
                                     </Link>
-                                    
                                     <img src={"/images/article.jpg"}  className="img-fluid mb-2" alt=""/>
-
-                                   
                                     <p className='fw-lighter'>{post?.body}</p>
-                                    
                                 </div>
+                               
                                 <div className='text-center mb-2'>
                                     <p>. . . </p>
                                     {post?.tags.map((tag:String)=>(
@@ -140,13 +141,14 @@ export  const PostDetails:FC = () => {
                             <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2"></div>
                         </div>
                     </div>
+
                     <div className='text-bg-light'>
                         <div className='container'>
                             <div className="row">
                                 <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2"></div>
                                 <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                                     <div style={BorderLessCard}>
-                                       <div className="">
+                                        <div className="">
                                             <div className="user-profile p-2 mb-2">
                                                 <div className="row">
                                                     <div className="col-12">
@@ -158,7 +160,7 @@ export  const PostDetails:FC = () => {
                                                             <h3 className='fw-lighter fw-bold'>
                                                                 {post?.author.firstname} {post?.author.lastname}
                                                             </h3>
-                                                              <div className="row align-items-center">
+                                                                <div className="row align-items-center">
                                                                 <div className="col float-left">
                                                                     <span>
                                                                         3.2k Follower 
@@ -175,12 +177,12 @@ export  const PostDetails:FC = () => {
 
                                                                 </div>
                                                                 <div className="col-auto">
-                                                               <button className="btn btn-info" style={RoundButton}>
+                                                                <button className="btn btn-info" style={RoundButton}>
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-chat-right-dots" viewBox="0 0 16 16">
                                                                         <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
                                                                         <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
                                                                     </svg>
-                                                               </button>
+                                                                </button>
                                                                 </div>
                                                             
                                                             </div>
@@ -200,46 +202,25 @@ export  const PostDetails:FC = () => {
                                                 </div>
                                             </div>
                                             <hr />
+                                            
                                             <div className="row">
-                                                {posts.map((postItem: Post) => (
-                                                    <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-3" key={postItem.article_id}>
-                                                        <Link
-                                                            to={`/posts/${postItem.article_id}`}
-                                                            style={LinkStyle}
-                                                            className="text-dark"
-                                                            key={postItem.article_id}
-                                                        >
-                                                        <div className="card" style={BorderLessCard} key={postItem.article_id}>
-                                                            <img src="/images/article.jpg" className="card-img-top" alt="..." />
-                                                            <div className="card-body p-1">
-                                                                <Link
-                                                                to={`/users/${postItem.author_id}`}
-                                                                style={LinkStyle}
-                                                                className="text-dark"
-                                                                key={postItem?.author?.user_id}
-                                                                >
-                                                                    <img 
-                                                                        src="https://media.licdn.com/dms/image/D4D03AQHxabz4XmY-cg/profile-displayphoto-shrink_200_200/0/1706858865855?e=1712188800&v=beta&t=ocQIemmfhPCtbB1eQdesHsX5_t-LeeJnm2L0jiIEZg0" 
-                                                                        style={ImageStyle} alt="" 
-                                                                    />
-                                                                    <span className="text-secondary">
-                                                                        {post?.author.firstname} {post?.author.lastname}
-                                                                    </span>
-                                                                </Link>
-                                                                
-                                                                <h5 className="fw-light">
-                                                                    {postItem.title?.slice(0, 30)}...
-                                                                </h5>
-                                                                <p className="fw-lighter">
-                                                                    {postItem.body?.slice(0, 100)}...
-                                                                </p>
-                                                            </div>
+                                                {Array.isArray(posts) && posts.length > 0 ? (
+                                                    posts.map((post: Post) => (
+                                                        <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                            <PostCard post={post} />
                                                         </div>
-                                                        </Link>
+                                                    ))
+                                                ) : (
+                                                    <div className="card" style={BorderLessCard}>
+                                                        <div className="card-body p-0">
+                                                            <h1 className="display-6">
+                                                                No posts available
+                                                            </h1>
+                                                        </div>
                                                     </div>
-                                                ))}
+                                                )}
                                             </div>
-                                       </div>
+                                        </div>
                                     </div>                        
                                 </div>
                                 <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2"></div>
@@ -252,51 +233,26 @@ export  const PostDetails:FC = () => {
                             <div className="row">
                                 <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2"></div>
                                 <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                                    <div style={BorderLessCard}>
-                                       <div className="">
-                                            
-                                            <h1>Recommendation from Medium</h1>
-                                            <div className="row">
-                                                {posts.map((postItem: Post) => (
-                                                    <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-3" key={postItem.article_id}>
-                                                        <Link
-                                                            to={`/posts/${postItem.article_id}`}
-                                                            style={LinkStyle}
-                                                            className="text-dark"
-                                                            key={postItem.article_id}
-                                                        >
-                                                        <div className="card" style={BorderLessCard} key={postItem.article_id}>
-                                                            <img src="/images/article.jpg" className="card-img-top" alt="..." />
-                                                            <div className="card-body p-1">
-                                                                <Link
-                                                                to={`/users/${postItem.author_id}`}
-                                                                style={LinkStyle}
-                                                                className="text-dark"
-                                                                key={postItem?.author?.user_id}
-                                                                >
-                                                                    <img 
-                                                                        src="https://media.licdn.com/dms/image/D4D03AQHxabz4XmY-cg/profile-displayphoto-shrink_200_200/0/1706858865855?e=1712188800&v=beta&t=ocQIemmfhPCtbB1eQdesHsX5_t-LeeJnm2L0jiIEZg0" 
-                                                                        style={ImageStyle} alt="" 
-                                                                    />
-                                                                    <span className="text-secondary">
-                                                                        {post?.author.firstname} {post?.author.lastname}
-                                                                    </span>
-                                                                </Link>
-                                                                
-                                                                <h5 className="fw-light">
-                                                                    {postItem.title?.slice(0, 30)}...
-                                                                </h5>
-                                                                <p className="fw-lighter">
-                                                                    {postItem.body?.slice(0, 100)}...
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        </Link>
-                                                    </div>
-                                                ))}
+                                <h3 className='m-2'>
+                                    Recommendation from Medium
+                                </h3>
+                                    <div className="row">
+                                        {Array.isArray(posts) && posts.length > 0 ? (
+                                            posts.map((post: Post) => (
+                                                <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                    <PostCard post={post} />
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <div className="card" style={BorderLessCard}>
+                                                <div className="card-body p-0">
+                                                    <h1 className="display-6">
+                                                        No posts available
+                                                    </h1>
+                                                </div>
                                             </div>
-                                       </div>
-                                    </div>                        
+                                        )}
+                                    </div>
                                 </div>
                                 <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2"></div>
                             </div>

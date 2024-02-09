@@ -39,3 +39,10 @@ export const PostDetailsImageStyle = {
     margin:"0px 10px 10px 0px"
 }
 
+
+export const CardSizing = {
+    maxHeight: "3em", 
+    overflow: "hidden", 
+    textOverflow: "ellipsis", 
+    whiteSpace: "nowrap" 
+}

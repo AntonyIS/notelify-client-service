@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import { ResponsePage } from '../components/ResponsePage';
 import { FetchUser, FetchUserPosts } from '../Services/apiService';
 import { Post, User } from '../Types/Types';
-import { PostList } from '../components/PostList';
 import { RoundButton } from '../Styles/Styles';
+import { PostList } from '../components/Posts/PostList';
 
 
 

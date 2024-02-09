@@ -10,6 +10,19 @@ export interface Post {
     author_id     :string;
     author          :User ;
 }
+export interface PostItem {
+    post: Post
+}
+
+
+export interface PostItemID {
+    post_id: string
+}
+
+export interface PostItemEdit {
+    post_id: string
+}
+
 
 export interface Posts {
     posts: Post[]

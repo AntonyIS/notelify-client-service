@@ -5,7 +5,7 @@ import { CreateNewPost, FetchUsers, InitializeUser } from '../Services/apiServic
 import { InputStyle, RoundButton } from '../Styles/Styles';
 import { ResponsePage } from '../components/ResponsePage';
 
-export  const CreatePost:FC = () => {
+export  const PostCreate:FC = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState<FormData>({
         author_id: '',
