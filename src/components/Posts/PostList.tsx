@@ -34,7 +34,9 @@ export const PostList:FC<Posts> = ({posts}) => {
                                             </p>
                                             
                                         </Link>
-                                        <PostFooter post_id={post.article_id} />
+    
+                                        {post && post.article_id && <PostFooter post_id={post.article_id} />}
+
                                         <hr className="my-4" />
                                         </>
                                     </div>

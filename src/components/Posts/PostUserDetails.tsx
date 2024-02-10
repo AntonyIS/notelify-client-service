@@ -21,7 +21,7 @@ export const PostUserDetails:FC<PostItem> = ({post}) => {
                                                     alt="" style={PostDetailsImageStyle} 
                                                 />
                                                 <h3 className='fw-lighter fw-bold'>
-                                                    {post?.author.firstname} {post?.author.lastname}
+                                                    {post?.author?.firstname} {post?.author?.lastname}
                                                 </h3>
                                                     <div className="row align-items-center">
                                                     <div className="col float-left">
@@ -61,7 +61,7 @@ export const PostUserDetails:FC<PostItem> = ({post}) => {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <p className='fw-lighter'>{post?.author.about}</p>
+                                        <p className='fw-lighter'>{post?.author?.about}</p>
                                     </div>
                                 </div>
                                 <hr />

@@ -22,20 +22,21 @@ export const PostCard:FC<PostItem> = ({post}) => {
                             style={ImageStyle} alt="" 
                         />
                         <span className="text-secondary">
-                            {post?.author.firstname} {post?.author.lastname}
+                            {post?.author?.firstname} {post?.author?.lastname}
                         </span>
                     </Link>
                     
                   
                     <div>
                         <h5 className="fw-light fw-bold">
-                            {post?.title.slice(0, 30)} {"..."}
+                            {post?.title?.slice(0, 30)} {"..."}
                         </h5>
                         <p className="fw-lighter">
                             {post?.body?.slice(0, 200)}...
                         </p>
                     </div>
-                    <PostFooter post_id={post.article_id} />
+                    {post && post.article_id && <PostFooter post_id={post.article_id} />}
+
                     <hr className="my-4" />
                 </div>
             </div>

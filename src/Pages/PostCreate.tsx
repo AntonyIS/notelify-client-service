@@ -30,17 +30,17 @@ export  const PostCreate:FC = () => {
         e.preventDefault();
         let valid = true;
 
-        if (!formData.title.trim()) {
+        if (!formData?.title?.trim()) {
             setErrors((errors) => ({ ...errors, title: 'Title is required' }));
             valid = false;
         }
 
-        if (!formData.subtitle.trim()) {
+        if (!formData?.subtitle?.trim()) {
             setErrors((errors) => ({ ...errors, subtitle: 'subtitle is required' }));
             valid = false;
         }
 
-        if (!formData.body.trim()) {
+        if (!formData?.body?.trim()) {
             setErrors((errors) => ({ ...errors, body: 'body is required' }));
             valid = false;
         }
@@ -68,6 +68,8 @@ export  const PostCreate:FC = () => {
                                 tags          :["Programming", "Computer Science"],
                                 publish_date  :null,
                                 updated_date  :null,
+                                likes  :0,
+                                dislikes  :0,
                                 author_id     :user.user_id,
                                 author          :user
                             }

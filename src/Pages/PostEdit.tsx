@@ -1,32 +1,32 @@
 import React ,{FC,useEffect,useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FormData, FormErrors, Post, User } from '../Types/Types';
-import { CreateNewPost, FetchPost, FetchUserPosts, FetchUsers, InitializeUser } from '../Services/apiService';
+import { CreateNewPost, FetchPost, FetchUsers, InitializeUser, UpdatePost } from '../Services/apiService';
 import { InputStyle, RoundButton } from '../Styles/Styles';
 import { ResponsePage } from '../components/ResponsePage';
 
-export  const PostEdit:FC = () => {
+export const PostEdit: FC = () => {
     const { post_id = "" } = useParams<{ post_id?: string }>();
-    const [post, setPost] = useState<Post>()
-    const [error, setError] = useState<string>("")  
+    const [post, setPost] = useState<Post>();
+    const [error, setError] = useState<string>("");
 
-   
     useEffect(() => {
-        if (post_id === undefined){
-            console.log("Post ID is undefined")
-            setError("Post ID is undefined")
-        }else{
-            const fetchPost = async () => {
-                const postResponse = await FetchPost(post_id)
-                if (postResponse.error){
-                    console.log(postResponse.error)
-                    setError(postResponse.error)
-                }else{
-                    setPost(postResponse.post)
-                    setError("");
+        const fetchPost = async () => {
+            try {
+                const postResponse = await FetchPost(post_id);
+                if (postResponse.error) {
+                    setError(postResponse.error);
+                } else {
+                    setPost(postResponse.post);
                 }
+            } catch (error) {
+                console.error("Error fetching post:", error);
+                setError("Error fetching post");
             }
-            fetchPost()
+        };
+
+        if (post_id) {
+            fetchPost();
         }
 
     }, [post_id]);
@@ -40,149 +40,95 @@ export  const PostEdit:FC = () => {
         tags: ["Programming", "Computer Science"]
     });
 
-    const [errors, setErrors] = useState<FormErrors>({
-        title: '',
-        subtitle: '',
-        body: ''
-    })  
-   
-    const handleInputChange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    useEffect(() => {
+        if (post) {
+            setFormData({
+                author_id: post.author_id,
+                title: post.title,
+                subtitle: post.subtitle,
+                body: post.body,
+                tags: post.tags
+            });
+        }
+    }, [post]);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-        setErrors({ ...errors, [name]: '' });
     }
-    const handleSubmit = (e:React.FormEvent) => {
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        let valid = true;
-
-        if (!formData.title.trim()) {
-            setErrors((errors) => ({ ...errors, title: 'Title is required' }));
-            valid = false;
+        try {
+            // Perform update logic here using formData and existing post ID
+            const updatedPost: Post = {
+                ...post,
+                title: formData.title,
+                subtitle: formData.subtitle,
+                body: formData.body,
+                // Update other fields as needed
+            };
+    
+            // Example: Assuming you have an UpdatePost function in your API service
+            await UpdatePost(updatedPost);
+    
+            // After successful update, navigate to post detail page
+            navigate(`/posts/${post_id}`);
+        } catch (error) {
+            console.error("Error updating post:", error);
+            setError("Error updating post");
         }
-
-        if (!formData.subtitle.trim()) {
-            setErrors((errors) => ({ ...errors, subtitle: 'subtitle is required' }));
-            valid = false;
-        }
-
-        if (!formData.body.trim()) {
-            setErrors((errors) => ({ ...errors, body: 'body is required' }));
-            valid = false;
-        }
-
-      
-        if (valid) {
-            const fetchData = async () =>  {
-                InitializeUser()
-                const usersResponse = await FetchUsers()
-               
-                if (usersResponse.error){
-                    console.log(usersResponse.error)
-                    setError(usersResponse.error)
-                }else{
-                    
-                    if (usersResponse.users){
-                        if (usersResponse.users.length > 0) {
-                            let user:User = usersResponse.users[0]
-                            let newPost:Post = {
-                                article_id    :"",
-                                title         :formData.title,
-                                subtitle      :formData.subtitle,
-                                introduction  :"",
-                                body          :formData.body,
-                                tags          :["Programming", "Computer Science"],
-                                publish_date  :null,
-                                updated_date  :null,
-                                author_id     :user.user_id,
-                                author          :user
-                            }
-                            const postIDResponse = await CreateNewPost(newPost);
-                            if (postIDResponse.error){
-                                console.log(postIDResponse.error)
-                                setError(postIDResponse.error)
-                            }else{
-                                navigate(`/posts/${postIDResponse.post_id}`);
-                            }
-                        }
-                    }
-                   
-                } 
-                
-            }
-            
-            fetchData()
-            setFormData(
-                { 
-                    author_id: '',
-                    title: '',
-                    subtitle: '',
-                    body: '',
-                    tags: [],
-                }
-            )
-        }
-
     }
-
 
     return (
         <>
             <div>
                 {
                     error ? (
-                        <ResponsePage message={error} statusCode={"500"} /> 
-                    ):(
+                        <ResponsePage message={error} statusCode={"500"} />
+                    ) : post ? (
                         <div className="container">
                             <div className="row">
                                 <div className="col-xs-12 col-sm-12 col-md-1 col-lg-1 col-xl-1"></div>
                                 <div className="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
-                                    <div className="card" style={{border: "none"}}>
+                                    <div className="card" style={{ border: "none" }}>
                                         <div className="card-body">
-                                            <h3 className='fw-light'>Draft an article!</h3>
+                                            <h3 className='fw-light'>Edit Post</h3>
                                             <form onSubmit={handleSubmit}>
                                                 <div className="form-group">
-                                                    <input 
-                                                        type="text" 
+                                                    <input
+                                                        type="text"
                                                         name="title"
-                                                        value={post?.title}
+                                                        value={formData.title}
                                                         onChange={handleInputChange}
-                                                        className="form-control text-bg-light p-3 mb-2 fw-lighter" 
-                                                        placeholder="Title" 
-                                                        style={InputStyle} 
+                                                        className="form-control text-bg-light p-3 mb-2 fw-lighter"
+                                                        placeholder="Title"
                                                     />
-                                                    <span className='text text-danger fw-lighter'>{errors.title}</span>
                                                 </div>
                                                 <div className="form-group">
-                                                    <input 
-                                                        type="text" 
+                                                    <input
+                                                        type="text"
                                                         name="subtitle"
-                                                        value={post?.subtitle}
+                                                        value={formData.subtitle}
                                                         onChange={handleInputChange}
-                                                        className="form-control text-bg-light p-3 mb-2 fw-lighter" 
-                                                        placeholder="Subtitle" 
-                                                        style={InputStyle} 
+                                                        className="form-control text-bg-light p-3 mb-2 fw-lighter"
+                                                        placeholder="Subtitle"
                                                     />
-                                                    <span className='text text-danger fw-lighter'>{errors.subtitle}</span>
                                                 </div>
                                                 <div className="form-floating">
-                                                    <textarea 
+                                                    <textarea
                                                         name="body"
                                                         value={formData.body}
                                                         onChange={handleInputChange}
-                                                        className="form-control text-bg-light p-3 mb-2 fw-lighter" 
-                                                        placeholder="Leave a comment here" 
-                                                        style={InputStyle} 
+                                                        className="form-control text-bg-light p-3 mb-2 fw-lighter"
+                                                        placeholder="Body"
                                                     ></textarea>
-                                                    <label 
-                                                        className='fw-lighter'
-                                                    >Body</label>
-                                                    <span className='text text-danger fw-lighter'>{errors.body}</span>
                                                 </div>
-                                                <button type="submit" className="btn btn-info" style={RoundButton}>Submit</button>
+                                                <button type="submit" className="btn btn-info">Update</button>
                                             </form>
                                         </div>
                                     </div>
-                                    <div className="card" style={{border: "none"}}>
+                                    <div className="card" style={{ border: "none" }}>
                                         <div className="card-body">
                                             <h1 className="fw-light">{formData.title}</h1>
                                             <h3 className="fw-light">{formData.subtitle}</h3>
@@ -195,9 +141,11 @@ export  const PostEdit:FC = () => {
                                 <div className="col-xs-12 col-sm-12 col-md-1 col-lg-1 col-xl-1"></div>
                             </div>
                         </div>
+                    ) : (
+                        <div>Loading...</div>
                     )
                 }
-                
+
             </div>
         </>
     )

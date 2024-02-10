@@ -61,6 +61,28 @@ export const FetchPosts = async (): Promise<{ posts?: Post[], error?: string }> 
     }
 }
 
+export const UpdatePost = async (post:Post): Promise<{post_id?: string, error?:string}> => {
+    try{
+        const response = await fetch(`${POSTS_URL}${post.article_id}`, {
+            method: "PUT",
+            headers: {"Content-Type": "appilication/json"},
+            body: JSON.stringify(post)
+        })
+
+        if (!response.ok){
+            console.log("Network response was not ok")
+            return {post_id:"", error: "Network response was not ok"}
+        }
+
+        const payload:Post = await response.json()
+        return {post_id:payload.article_id , error: undefined}
+
+    }catch(error){
+        console.log(error)
+        throw new Error (`ERROR : ${error}`)
+    }
+}
+
 export const FetchUserPosts = async (author_id:string): Promise<{ posts?: Post[], error?: string }>=>{
     try {
         const response = await fetch(`${POSTS_URL}author/${author_id}`)
@@ -75,6 +97,8 @@ export const FetchUserPosts = async (author_id:string): Promise<{ posts?: Post[]
         return { posts: undefined, error: "Internal Server Error!" };
     }
 }
+
+
 export const DeletePost = async (articleID:string): Promise<{error?: string }>=>{
     try {
         const response = await fetch(`${POSTS_URL}${articleID}`, {

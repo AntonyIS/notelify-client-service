@@ -8,7 +8,7 @@ if (!CLIENT_ID) {
 let USERS_URL = "/users/v1/";
 let POSTS_URL = "/posts/v1/";
 let LOGGING_URL = "/logger/v1/";
-let REDIRECT_URI = "http://notelify.com/";
+let REDIRECT_URI = "http://notelify.com";
 let GITHUB_CALL_BACK_URL = "http://users:8000/users/v1/github/login/callback";
 
 if (ENV === "development") {

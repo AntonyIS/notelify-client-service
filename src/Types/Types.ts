@@ -1,15 +1,18 @@
 export interface Post {
-    article_id    :string;
-    title         :string;
-    subtitle      :string;
-    introduction  :string;
-    body          :string;
-    tags          :string[];
-    publish_date  :null ;
-    updated_date  :null;
-    author_id     :string;
-    author          :User ;
+    article_id?     :string;
+    title?         :string;
+    subtitle?      :string;
+    introduction?  :string;
+    body?          :string;
+    likes?         :number;
+    dislikes?      :number;
+    tags?          :string[];
+    publish_date?  :null ;
+    updated_date?  :null;
+    author_id?     :string;
+    author?          :User ;
 }
+
 export interface PostItem {
     post: Post
 }
@@ -82,10 +85,10 @@ export interface FormErrors {
 }
 
 export interface FormData {
-    author_id: string;
-    title: string;
-    subtitle: string;
-    body: string;
-    tags: string[]
+    author_id?: string;
+    title?: string;
+    subtitle?: string;
+    body?: string;
+    tags?: string[]
 }
 
