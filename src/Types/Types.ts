@@ -10,7 +10,7 @@ export interface Post {
     publish_date?  :null ;
     updated_date?  :null;
     author_id?     :string;
-    author?          :User ;
+    author?        :User ;
 }
 
 export interface PostItem {
