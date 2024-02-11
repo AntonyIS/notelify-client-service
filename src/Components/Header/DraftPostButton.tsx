@@ -1,5 +1,5 @@
 import React from "react";
-import { RoundButton, SearchRoundButton } from "../../Styles/Styles";
+import { RoundButton } from "../../Styles/Styles";
 
 export const DraftPostButton:React.FC = () => {
     return (
