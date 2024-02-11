@@ -26,7 +26,7 @@ export const PostBody:FC<PostItem> = ({post}) => {
                         style={ImageStyle} alt="" 
                     />
                     <span className="text-secondary">
-                        {post?.author?.firstname} {post?.author?.lastname}
+                        {post?.author?.firstname} {post?.author?.lastname} ooppp
                     </span>
                 </Link>
                 

@@ -72,7 +72,9 @@ export  const UserProfile:FC = () => {
                                         <h4>
                                             {user?.about}
                                         </h4>
-                                        <p>Followers {user?.followers} Following {user?.following}</p>
+                                        {/* <p>
+                                            Followers {user?.followers} Following {user?.following}
+                                        </p> */}
                                         <button className="btn btn-info" style={RoundButton}>Follow</button>
                                     </div>
                                 </div>
@@ -99,8 +101,9 @@ export  const UserProfile:FC = () => {
                                         <h6 className="">
                                             {user?.firstname} {user?.lastname}
                                         </h6>
-                                        <p>
-                                            {user?.followers} Followers</p>
+                                        {/* <p>
+                                            {user?.followers} Followers
+                                        </p> */}
                                         <p>
                                             {user?.about}
                                         </p>

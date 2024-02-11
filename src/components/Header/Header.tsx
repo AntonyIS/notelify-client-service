@@ -1,7 +1,7 @@
 import {FC} from "react";
 import { Link } from "react-router-dom";
-import { LinkStyle, NavbarStyle, RoundButton, SearchRoundButton } from "../Styles/Styles";
-import LoginButton from "./LoginButton";
+import { LinkStyle, NavbarStyle, RoundButton, SearchRoundButton } from "../../Styles/Styles";
+import LoginButton from "../LoginButton";
 
 export  const Header:FC = () => {
     return (

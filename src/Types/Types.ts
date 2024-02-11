@@ -30,7 +30,15 @@ export interface PostItemEdit {
 export interface Posts {
     posts: Post[]
 }
-
+export interface FollowUser {
+    user_id        :string;
+    firstname      :string;
+    lastname       :string;
+    email          :string;
+    handle         :string;
+    about          :string;
+    profile_image  :string;
+}
 export interface User {
     user_id        :string;
     firstname      :string;
@@ -41,13 +49,15 @@ export interface User {
     articles       :Post[];
     password       :string;
     profile_image  :string;
-    following      :number;
-    followers      :number;
+    following      :FollowUser[];
+    followers      :FollowUser[];
 }
 
 export interface Users {
     users: User[]
 }
+
+
 
 export interface PostFormData {
     title: string;
@@ -91,4 +101,5 @@ export interface FormData {
     body?: string;
     tags?: string[]
 }
+
 

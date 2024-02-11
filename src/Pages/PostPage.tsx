@@ -5,6 +5,7 @@ import { Post } from '../Types/Types';
 import { BorderLessCard, ImageStyle, LinkStyle, PostDetailsImageStyle, RoundButton } from '../Styles/Styles';
 import { ResponsePage } from '../components/ResponsePage';
 import { PostCard } from '../components/Posts/PostCard';
+import { PostFooter } from '../components/Posts/PostFooter';
 
 
 
@@ -109,6 +110,8 @@ export  const PostPage:FC = () => {
                                             
                                         </div>
                                     </Link>
+                                    {post && post.article_id && <PostFooter post_id={post.article_id} />}
+
                                     <hr />
                                     <div className="row align-items-center">
                                         <div className="col float-left">

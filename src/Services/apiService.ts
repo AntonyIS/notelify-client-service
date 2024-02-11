@@ -2,6 +2,7 @@ import { POSTS_URL, USERS_URL } from "../Config/Config";
 import { Post, User} from "../Types/Types";
 
 export const CreateNewPost = async (post:Post): Promise<{post_id?: string, error?:string}> => {
+    console.log(post)
     try{
         const response = await fetch(`${POSTS_URL}`, {
             method: "POST",
@@ -115,6 +116,8 @@ export const DeletePost = async (articleID:string): Promise<{error?: string }>=>
     }
 }
 export const CreateNewUser = async (user:User): Promise<{user_id?: string, error?:string}> => {
+
+    console.log(`${USERS_URL}`)
     try{
         const response = await fetch(`${USERS_URL}`, {
             method: "POST",
@@ -191,8 +194,8 @@ export const InitializeUser = async () : Promise<void> => {
                         articles : [],
                         password : "Antony",
                         profile_image : "https://media.licdn.com/dms/image/D4D03AQHxabz4XmY-cg/profile-displayphoto-shrink_200_200/0/1706858865855?e=1712188800&v=beta&t=ocQIemmfhPCtbB1eQdesHsX5_t-LeeJnm2L0jiIEZg0",
-                        following :0,
-                        followers : 0,
+                        following :[],
+                        followers : [],
                     }
                     CreateNewUser(newUser)
                 }

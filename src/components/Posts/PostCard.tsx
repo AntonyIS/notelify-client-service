@@ -8,7 +8,7 @@ import { PostFooter } from "./PostFooter";
 export const PostCard:FC<PostItem> = ({post}) => {
     return (
         <>
-            <div className="card" style={BorderLessCard} key={post.article_id}>
+            <div className="card mt-1" style={BorderLessCard} key={post.article_id}>
                 <div className="card-body p-1 text-bg-light">
                     <img src="/images/article.jpg" className="card-img-top" alt="..." />
                     <Link

@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from './Pages/Home';
 import { PostPage } from './Pages/PostPage';
 import { UserProfile } from './Pages/User';
-import { Header } from './components/Header';
+import { Header } from './components/Header/Header';
 import { PostCreate } from './Pages/PostCreate';
 import { PostEdit } from './Pages/PostEdit';
 
