@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Post, Posts } from "../../Types/Types";
 import { Link } from "react-router-dom";
 import { BorderLessCard, ImageStyle, LinkStyle } from "../../Styles/Styles";
-import { PostFooter } from "./PostFooter";
+// import { PostFooter } from "./PostFooter";
 
 export const PostList:FC<Posts> = ({posts}) => {
     return (
@@ -35,7 +35,7 @@ export const PostList:FC<Posts> = ({posts}) => {
                                             
                                         </Link>
     
-                                        {post && post.article_id && <PostFooter post_id={post.article_id} />}
+                                        {/* {post && post.article_id && <PostFooter post_id={post.article_id} />} */}
 
                                         <hr className="my-4" />
                                         </>

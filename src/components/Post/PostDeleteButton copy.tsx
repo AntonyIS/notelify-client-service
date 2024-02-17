@@ -1,7 +1,8 @@
 import { FC } from "react";
 import { useNavigate } from 'react-router-dom';
 import {PostItemID } from "../../Types/Types";
-import { DeletePost } from "../../Services/apiService";
+import { DeletePost } from "../../Services/postService";
+
 
 export const PostDeleteButton:FC<PostItemID> = ({post_id}) => {
     const navigate = useNavigate();

@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { RoundButton } from '../../Styles/Styles';
-import { InitializeUser } from '../../Services/apiService';
 import { HandleGitHubCallback } from '../../Services/authService';
 
 
 const LoginButton: React.FC = () => {
     const handleLogin = (): void => {
-        InitializeUser();
+        
     };
       
     useEffect(() => {

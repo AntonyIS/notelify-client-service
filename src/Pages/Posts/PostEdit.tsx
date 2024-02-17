@@ -1,6 +1,6 @@
 import React from "react"
 
-export const EditPost:React.FC = () => {
+export const PostEdit:React.FC = () => {
     return (
         <>Home Page </>
     )

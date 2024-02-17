@@ -1,11 +1,10 @@
 import React ,{FC, useEffect, useState} from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { FetchPost,FetchUserPosts, UpdatePost } from '../Services/apiService';
-import { Post } from '../Types/Types';
-import { BorderLessCard, ImageStyle, LinkStyle, PostDetailsImageStyle, RoundButton } from '../Styles/Styles';
-import { ResponsePage } from '../components/ResponsePage';
-import { PostCard } from '../components/Posts/PostCard';
-import { PostFooter } from '../components/Posts/PostFooter';
+import { Post } from '../../Types/Types';
+import { BorderLessCard, ImageStyle, LinkStyle, PostDetailsImageStyle, RoundButton } from '../../Styles/Styles';
+import { ResponsePage } from '../../components/Utils/ResponsePage';
+import { PostCard } from '../../components/Post/PostCard';
+import { GetPost, UpdatePost, UserPosts } from '../../Services/postService';
 
 
 
@@ -16,13 +15,14 @@ export  const PostPage:FC = () => {
     const [posts, setPosts] = useState<Post[]>([])
     const [error, setError] = useState("");
    
+    
     useEffect(() => {
         if (post_id === undefined){
             console.log("Post ID is undefined")
             setError("Post ID is undefined")
         }else{
             const fetchPost = async () => {
-                const postResponse = await FetchPost(post_id)
+                const postResponse = await GetPost(post_id)
                 if (postResponse.error){
                     console.log(postResponse.error)
                     setError(postResponse.error)
@@ -30,12 +30,11 @@ export  const PostPage:FC = () => {
                     setPost(postResponse.post)
 
                     if (postResponse.post?.author_id !== undefined) {
-                        const postsResponse = await FetchUserPosts(postResponse.post?.author_id);
+                        const postsResponse = await UserPosts(postResponse.post?.author_id);
                         if (postsResponse.error) {
                             console.log(postsResponse.error);
                             setError(postsResponse.error);
                         } else {
-                            console.log(postsResponse.posts)
                             setPosts(postsResponse.posts || []);
                             setError("");
                         }
@@ -89,14 +88,14 @@ export  const PostPage:FC = () => {
                                         <div className='mb-3 fw-lighter'>
                                             <span className='mr-3'>
                                                 <img 
-                                                    src="https://media.licdn.com/dms/image/D4D03AQHxabz4XmY-cg/profile-displayphoto-shrink_200_200/0/1706858865855?e=1712188800&v=beta&t=ocQIemmfhPCtbB1eQdesHsX5_t-LeeJnm2L0jiIEZg0" 
+                                                    src={post?.author?.profile_image} 
                                                     alt="" style={ImageStyle} 
                                                 />
                                             </span>
                                             <span>
                                                 {post?.author?.firstname} {post?.author?.lastname} {"     .    "} 
                                                 <Link to={`/users/${post?.author_id}`} style={LinkStyle} className='text-dark'>
-                                                    <span className="text text-info">
+                                                    <span className="btn btn-info">
                                                         Follow 
                                                     </span>
                                                 </Link>
@@ -110,7 +109,7 @@ export  const PostPage:FC = () => {
                                             
                                         </div>
                                     </Link>
-                                    {post && post.article_id && <PostFooter post_id={post.article_id} />}
+                                    {/* {post && post.article_id && <PostFooter post_id={post.article_id} />} */}
 
                                     <hr />
                                     <div className="row align-items-center">

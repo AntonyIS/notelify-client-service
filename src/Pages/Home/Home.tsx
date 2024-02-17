@@ -1,22 +1,22 @@
 import { FC, useEffect, useState } from "react";
-import { Post } from "../Types/Types";
-import { FetchPosts } from "../Services/apiService";
-import { DraftPost } from "../components/DraftPost";
-import { PostListRecommendations } from "../components/PostListRecommendations";
-import { ResponsePage } from "../components/ResponsePage";
-import { PostList } from "../components/Posts/PostList";
+import { Post } from "../../Types/Types";
+import { PostList } from "../../components/Post/PostList";
+import { PostListRec } from "../../components/Post/PostListRec";
+import { ResponsePage } from "../../components/Utils/ResponsePage";
+import { BorderLessCard, LinkStyle, RoundButton } from "../../Styles/Styles";
+import { Link } from "react-router-dom";
+import { GetPosts } from "../../Services/postService";
+
 
 export const Home:FC = () => {
     const [posts,setPosts] = useState<Post[]>([])
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
 
-
     useEffect(() => {
-
         try {
             const fetchPosts = async () => {
-                const postsResponse = await FetchPosts()
+                const postsResponse = await GetPosts()
                 if (postsResponse.error){
                     console.log(postsResponse.error)
                     setError(postsResponse.error)
@@ -44,7 +44,21 @@ export const Home:FC = () => {
                     <>
                         {
                             isLoggedIn ? (
-                                <DraftPost />
+                                <div className="card text-bg-light mb-3" style={BorderLessCard}>
+                                    <div className="card-body">
+                                        <div className="row">
+                                            <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                                <h6 className=''>Draft an Article ?</h6>
+                                                <Link to={`/posts/draft`} style={LinkStyle}>
+                                                    <button className="btn btn-info" style={RoundButton}>Draft</button>
+                                                </Link>
+                                            </div>
+                                            <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             ):(
                                 <></>
                             )
@@ -54,7 +68,7 @@ export const Home:FC = () => {
                                 <PostList posts={posts} />
                             </div>
                             <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                <PostListRecommendations  posts={posts}/>
+                                <PostListRec  posts={posts}/>
                             </div>
                         </div>
                     </>
@@ -62,5 +76,4 @@ export const Home:FC = () => {
             }
         </div>
     </>
-
 }

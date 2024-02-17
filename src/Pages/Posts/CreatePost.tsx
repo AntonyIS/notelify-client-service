@@ -1,12 +1,16 @@
 import React ,{FC,useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FormData, FormErrors, Post, User } from '../Types/Types';
-import { CreateNewPost, FetchUsers, InitializeUser } from '../Services/apiService';
-import { InputStyle, RoundButton } from '../Styles/Styles';
-import { ResponsePage } from '../components/ResponsePage';
+import { FormData, FormErrors, Post, UserResponse } from '../../Types/Types';
+import { InputStyle, RoundButton } from '../../Styles/Styles';
+import { ResponsePage } from '../../components/Utils/ResponsePage';
+import { InitializeUser } from '../../Services/userService';
+import { CreateNewPost } from '../../Services/postService';
 
-export  const PostCreate:FC = () => {
+
+export  const CreatePost:FC = () => {
+    // navigation to different pages
     const navigate = useNavigate();
+
     const [formData, setFormData] = useState<FormData>({
         author_id: '',
         title: '',
@@ -21,6 +25,7 @@ export  const PostCreate:FC = () => {
         body: ''
     })  
     const [error, setError] = useState<string>("")  
+    
     const handleInputChange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -48,43 +53,36 @@ export  const PostCreate:FC = () => {
       
         if (valid) {
             const fetchData = async () =>  {
-                InitializeUser()
-                const usersResponse = await FetchUsers()
-               
-                if (usersResponse.error){
-                    console.log(usersResponse.error)
-                    setError(usersResponse.error)
+                const userResponse = await InitializeUser()
+                if (userResponse.user === undefined) {
+                    setError("Internal Server Error")
+                }else if (userResponse.error !== undefined) {
+                    setError(userResponse.error)
                 }else{
-                    
-                    if (usersResponse.users){
-                        if (usersResponse.users.length > 0) {
-                            let user:User = usersResponse.users[0]
-                            let newPost:Post = {
-                                article_id    :"",
-                                title         :formData.title,
-                                subtitle      :formData.subtitle,
-                                introduction  :"",
-                                body          :formData.body,
-                                tags          :["Programming", "Computer Science"],
-                                publish_date  :null,
-                                updated_date  :null,
-                                likes  :0,
-                                dislikes  :0,
-                                author_id     :user.user_id,
-                                author          :user
-                            }
-                            const postIDResponse = await CreateNewPost(newPost);
-                            if (postIDResponse.error){
-                                console.log(postIDResponse.error)
-                                setError(postIDResponse.error)
-                            }else{
-                                navigate(`/posts/${postIDResponse.post_id}`);
-                            }
-                        }
+                    let user: UserResponse = userResponse.user
+                    let newPost:Post = {
+                        article_id    :"",
+                        title         :formData.title,
+                        subtitle      :formData.subtitle,
+                        introduction  :"",
+                        body          :formData.body,
+                        tags          :["Programming", "Computer Science"],
+                        publish_date  :null,
+                        updated_date  :null,
+                        likes         :0,
+                        dislikes      :0,
+                        author_id     :user.user_id,
+                        author        :user
                     }
-                   
-                } 
-                
+                  
+                    const postResponse = await CreateNewPost(newPost);
+                    if (postResponse.error){
+                        console.log(postResponse.error)
+                        setError(postResponse.error)
+                    }else if (postResponse.post !== undefined) {
+                        navigate(`/posts/${postResponse.post.article_id}`);
+                    }
+                }
             }
             
             fetchData()

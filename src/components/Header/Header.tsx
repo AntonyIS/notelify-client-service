@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { LinkStyle, NavbarStyle } from "../../Styles/Styles";
 import { SearchInput } from "./SearchInput";
 import { DraftPostButton } from "./DraftPostButton";
-import LoginButton from "../../components/LoginButton";
 import { Notification } from "./Notification";
 import { UserProfile } from "./UserProfile";
+import LoginButton from "../Auth/LoginButton";
 
 export  const Header:React.FC = () => {
     return (

@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { Post, Posts } from "../Types/Types";
+import { Post, Posts } from "../../Types/Types";
 import { Link } from "react-router-dom";
-import { BorderLessCard, ImageStyle, LinkStyle } from "../Styles/Styles";
+import { BorderLessCard, ImageStyle, LinkStyle } from "../../Styles/Styles";
 
-export const PostListRecommendations:FC<Posts> = ({posts}) => {
+export const PostListRec:FC<Posts> = ({posts}) => {
     return (
         <>
             <div className="mt-2">

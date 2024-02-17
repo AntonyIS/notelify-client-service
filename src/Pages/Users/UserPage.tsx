@@ -1,10 +1,12 @@
 import React ,{FC, useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
-import { ResponsePage } from '../components/ResponsePage';
-import { FetchUser, FetchUserPosts } from '../Services/apiService';
-import { Post, User } from '../Types/Types';
-import { RoundButton } from '../Styles/Styles';
-import { PostList } from '../components/Posts/PostList';
+import { Post, User } from '../../Types/Types';
+import { RoundButton } from '../../Styles/Styles';
+import { ResponsePage } from '../../components/Utils/ResponsePage';
+import { PostList } from '../../components/Post/PostList';
+import { GetUser } from '../../Services/userService';
+import { UserPosts } from '../../Services/postService';
+
 
 
 
@@ -16,7 +18,7 @@ const imageStyle = {
 }
 
 
-export  const UserProfile:FC = () => {
+export  const UserPage:FC = () => {
     const { user_id } = useParams<string>();
     const [user, setUser] = useState<User>()
     const [posts, setPosts] = useState<Post[]>([])
@@ -28,7 +30,7 @@ export  const UserProfile:FC = () => {
             setError("Post ID is undefined")
         }else{
             const fetchPost = async () => {
-                const postResponse = await FetchUser(user_id)
+                const postResponse = await GetUser(user_id)
                 if (postResponse.error){
                     console.log(postResponse.error)
                 }else{
@@ -39,7 +41,7 @@ export  const UserProfile:FC = () => {
             fetchPost()
 
             const fetchPosts = async () => {
-                const postsResponse = await FetchUserPosts(user_id)
+                const postsResponse = await UserPosts(user_id)
                 if (postsResponse.error){
                     console.log(postsResponse.error)
                     setError(postsResponse.error)
@@ -72,9 +74,7 @@ export  const UserProfile:FC = () => {
                                         <h4>
                                             {user?.about}
                                         </h4>
-                                        {/* <p>
-                                            Followers {user?.followers} Following {user?.following}
-                                        </p> */}
+                                        {/* <p>Followers {user?.followers} Following {user?.following}</p> */}
                                         <button className="btn btn-info" style={RoundButton}>Follow</button>
                                     </div>
                                 </div>

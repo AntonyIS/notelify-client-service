@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { HandleGitHubCallback, InitiateGitHubLogin } from '../Services/authService';
-import { RoundButton } from '../Styles/Styles';
+import { HandleGitHubCallback, InitiateGitHubLogin } from '../../Services/authService';
+import { RoundButton } from '../../Styles/Styles';
 
 
 const LoginButton: React.FC = () => {

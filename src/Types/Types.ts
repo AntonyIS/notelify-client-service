@@ -1,3 +1,14 @@
+export interface UserResponse {
+    user_id        :string;
+    firstname      :string;
+    lastname       :string;
+    email          :string;
+    handle         :string;
+    about          :string;
+    profile_image  :string;
+    following      :FollowUser[];
+    followers      :FollowUser[];
+}
 export interface Post {
     article_id?     :string;
     title?         :string;
@@ -10,7 +21,19 @@ export interface Post {
     publish_date?  :null ;
     updated_date?  :null;
     author_id?     :string;
-    author?        :User ;
+    author?        :UserResponse ;
+}
+
+export interface PostRequest {
+    title?         :string;
+    subtitle?      :string;
+    introduction?  :string;
+    body?          :string;
+    likes?         :number;
+    dislikes?      :number;
+    tags?          :string[];
+    author_id?     :string;
+    author?        :UserResponse ;
 }
 
 export interface PostItem {
@@ -52,6 +75,8 @@ export interface User {
     following      :FollowUser[];
     followers      :FollowUser[];
 }
+
+
 
 export interface Users {
     users: User[]
