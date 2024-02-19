@@ -74,6 +74,7 @@ export interface User {
     profile_image  :string;
     following      :FollowUser[];
     followers      :FollowUser[];
+    accessToken    : string
 }
 
 

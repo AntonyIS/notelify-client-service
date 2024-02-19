@@ -179,13 +179,14 @@ export const InitializeUser = async (): Promise<{user?: UserResponse, error?:str
                         firstname : "Antony",
                         lastname : "Injila",
                         email : "antony@notelify.com",
+                        password : "Antony",
                         handle : "antony@notelify",
                         about : "Passionate Go, Python, Typescript developer. Drone enthusiast",
                         articles : [],
-                        password : "Antony",
                         profile_image : "https://media.licdn.com/dms/image/D4D03AQHxabz4XmY-cg/profile-displayphoto-shrink_200_200/0/1706858865855?e=1712188800&v=beta&t=ocQIemmfhPCtbB1eQdesHsX5_t-LeeJnm2L0jiIEZg0",
                         following :[],
                         followers : [],
+                        accessToken : "",
                     }
                    
                     let newUserResponse = await CreateUser(newUser)
