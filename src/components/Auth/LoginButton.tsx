@@ -1,25 +1,35 @@
 import React, { useEffect } from 'react';
-import { HandleGitHubCallback, InitiateGitHubLogin } from '../../Services/authService';
-import { RoundButton } from '../../Styles/Styles';
+// import { HandleGitHubCallback, InitiateGitHubLogin } from '../../Services/authService';
+import { LinkStyle, RoundButton } from '../../Styles/Styles';
+import { Link } from 'react-router-dom';
 
 
 const LoginButton: React.FC = () => {
-    const handleLogin = (): void => {
-        InitiateGitHubLogin();
-    };
+    // const handleLogin = (): void => {
+    //     InitiateGitHubLogin();
+    // };
       
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
-        if (code) {
-            HandleGitHubCallback(code);
-        }
-    }, []);
+    // useEffect(() => {
+    //     const urlParams = new URLSearchParams(window.location.search);
+    //     const code = urlParams.get('code');
+    //     if (code) {
+    //         HandleGitHubCallback(code);
+    //     }
+    // }, []);
 
   return (
-    <button type="button" className="btn btn-outline-secondary fw-light text-dark m-1" onClick={handleLogin} style={RoundButton}>
+    <Link 
+        to={`/login`} 
+        style={LinkStyle}
+        >
+            <button 
+                type="button" 
+                className="btn btn-outline-secondary fw-light text-dark m-1" 
+                style={RoundButton}
+            >
         Login
     </button>
+    </Link>
   );
 };
 

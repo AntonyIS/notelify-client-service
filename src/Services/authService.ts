@@ -3,6 +3,10 @@ import {CLIENT_ID,GITHUB_CALL_BACK_URL,REDIRECT_URI } from "../Config/Config";
 export const InitiateGitHubLogin = (): void => {
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=user`;
 };
+
+export const InitiateLinkedInLogin = (): void => {
+    window.location.href = `http://localhost:3000/posts/draft`;
+};
   
 export const HandleGitHubCallback = async (code: string): Promise<void> => {
 

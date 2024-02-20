@@ -6,6 +6,8 @@ import { CreatePost } from './Pages/Posts/CreatePost';
 import { PostPage } from './Pages/Posts/PostPage';
 import { PostEdit } from './Pages/Posts/PostEdit';
 import { UserPage } from './Pages/Users/UserPage';
+import { Login } from './Pages/Authentication/Login';
+import { SignUp } from './Pages/Authentication/Signup';
 
 
 const App:FC = ()  =>{
@@ -19,6 +21,8 @@ const App:FC = ()  =>{
             <Route path="/posts/draft" element={<CreatePost/>}/>
             <Route path="/posts/edit/:post_id" element={<PostEdit/>}/>
             <Route path="/users/:user_id" element={<UserPage/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/signup" element={<SignUp/>}/>
           
         </Routes>
       </BrowserRouter>
