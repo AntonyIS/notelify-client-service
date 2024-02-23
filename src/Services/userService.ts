@@ -172,6 +172,7 @@ export const InitializeUser = async (): Promise<{user?: UserResponse, error?:str
                 }
             }else{
                 let users : User[] = userResponse.users
+                console.log(users.length === 0)
                 if (users.length === 0) {
                     // Create a new user 
                     const newUser:User = {

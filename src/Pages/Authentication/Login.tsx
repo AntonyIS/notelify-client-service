@@ -1,18 +1,20 @@
 import React, { useEffect } from "react";
-import { HandleGitHubCallback, InitiateGitHubLogin, InitiateLinkedInLogin } from "../../Services/authService";
+import { HandleGitHubCallback} from "../../Services/authService";
+import { GITHUB_OAUTH } from "../../Config/Config";
 
 export const Login: React.FC = () => {
     const handleGitHubLogin = (): void => {
-        InitiateGitHubLogin();
+        window.location.href = GITHUB_OAUTH;
     };
     const handleLinkedInbLogin = (): void => {
-        InitiateLinkedInLogin();
+        window.location.href = GITHUB_OAUTH;
     };
       
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
         if (code) {
+            console.log(code)
             HandleGitHubCallback(code);
         }
     }, []);
@@ -20,8 +22,8 @@ export const Login: React.FC = () => {
         <>
             <div className="container mt-3 fw-light">
                 <div className="row">
-                    <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3"></div>
-                    <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4"></div>
+                    <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                         <div className="card">
                             <div className="card-body p-3">
                                 <form>
@@ -46,7 +48,7 @@ export const Login: React.FC = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3"></div>
+                    <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4"></div>
                 </div>
             </div>
         </>

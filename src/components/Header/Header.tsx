@@ -1,13 +1,20 @@
-import {FC} from "react";
 import { Link } from "react-router-dom";
-import { LinkStyle, NavbarStyle } from "../../Styles/Styles";
+import { LinkStyle, NavbarStyle, RoundButton } from "../../Styles/Styles";
 import { SearchInput } from "./SearchInput";
 import { DraftPostButton } from "./DraftPostButton";
 import { Notification } from "./Notification";
 import { UserProfile } from "./UserProfile";
 import LoginButton from "../Auth/LoginButton";
+import { User } from "../../Types/Types";
 
-export  const Header:React.FC = () => {
+
+interface HeaderProps {
+    isLoggedIn: boolean;
+    onLogout: () => void;
+    user: User | null;
+}
+  
+export const Header: React.FC<HeaderProps> = ({ isLoggedIn, onLogout ,user}) => {
     return (
         <div>
             <nav className="navbar navbar-expand-lg  bg-white fw-light">
@@ -25,21 +32,31 @@ export  const Header:React.FC = () => {
                             <SearchInput />
                         </div>
                     </div>
-                  
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
+                   
+                   
                     <div className="collapse navbar-collapse" id="navbarText">
                         <ul className="navbar-nav me-auto mb-lg-0">
                         
                         </ul>
-                        <Link to={`/posts/draft`} style={LinkStyle} >
-                           <DraftPostButton />
-                        </Link>
-                        
-                        <LoginButton />
-                        <Notification />
-                        <UserProfile />
+                        {isLoggedIn ? (
+                           <>
+                                <Link to={`/posts/draft`} style={LinkStyle} >
+                                    <DraftPostButton />
+                                </Link>
+                                <Notification />
+                                <UserProfile user={user} />
+                                
+                                <button type="button" className="btn btn-outline-secondary fw-light text-dark m-1" onClick={onLogout} style={RoundButton}>
+                                    Logout
+                                </button>
+                              
+                           </>
+                        ) : (
+                            <LoginButton />
+                        )}
                     </div>
                 </div>
             </nav>

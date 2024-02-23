@@ -8,7 +8,7 @@ import { CreateNewPost } from '../../Services/postService';
 
 
 export  const CreatePost:FC = () => {
-    // navigation to different pages
+
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState<FormData>({

@@ -24,7 +24,6 @@ export  const PostPage:FC = () => {
             const fetchPost = async () => {
                 const postResponse = await GetPost(post_id)
                 if (postResponse.error){
-                    console.log(postResponse.error)
                     setError(postResponse.error)
                 }else{
                     setPost(postResponse.post)
@@ -175,9 +174,7 @@ export  const PostPage:FC = () => {
                                                                 className="text-dark"
                                                                 key={post?.author?.user_id}
                                                             >
-                                                                <img 
-                                                                    src="https://media.licdn.com/dms/image/D4D03AQHxabz4XmY-cg/profile-displayphoto-shrink_200_200/0/1706858865855?e=1712188800&v=beta&t=ocQIemmfhPCtbB1eQdesHsX5_t-LeeJnm2L0jiIEZg0" 
-                                                                    alt="" style={PostDetailsImageStyle} 
+                                                                <img src={post?.author?.profile_image}                                                                     alt="" style={PostDetailsImageStyle} 
                                                                 />
                                                                 <h3 className='fw-lighter fw-bold'>
                                                                     {post?.author?.firstname} {post?.author?.lastname}
