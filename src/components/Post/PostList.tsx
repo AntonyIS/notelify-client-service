@@ -1,10 +1,32 @@
-import { FC } from "react";
-import { Post, Posts } from "../../Types/Types";
+import { FC, useState } from "react";
+import { Post } from "../../Types/Types";
 import { Link } from "react-router-dom";
-import { BorderLessCard, ImageStyle, LinkStyle } from "../../Styles/Styles";
+import { BorderLessCard, ImageStyle, LinkStyle, RoundButton } from "../../Styles/Styles";
+import { UpdatePost } from "../../Services/postService";
+import { PostFooter } from "./PostFooter";
 // import { PostFooter } from "./PostFooter";
+interface postsProps {
+    posts : Post [],
+    isLoggedIn : Boolean
+}
+export const PostList:FC<postsProps> = ({posts, isLoggedIn}) => {
+    const [post, setPost] = useState<Post>()
 
-export const PostList:FC<Posts> = ({posts}) => {
+    const handleLike = async (post: Post) => {
+        if (post !== undefined){
+            const updatedPost = { ...post, likes: (post.likes || 0) + 1 };
+            setPost(updatedPost);
+            UpdatePost(updatedPost)
+        }
+    };
+
+    const handleDisLike = async (post: Post) => {
+        if (post !== undefined){
+            const updatedPost = { ...post, dislikes: (post.dislikes || 0) + 1 };
+            setPost(updatedPost);
+            UpdatePost(updatedPost)
+        }
+    };
     return (
         <>
            <div className="mt-2">
@@ -30,10 +52,9 @@ export const PostList:FC<Posts> = ({posts}) => {
                                             <p className="fw-lighter">
                                                 {post.body?.slice(0, 200)}...
                                             </p>
-                                            
                                         </Link>
-    
-                                        {/* {post && post.article_id && <PostFooter post_id={post.article_id} />} */}
+                                        
+                                        {post && post.article_id && <PostFooter post={post} />}
 
                                         <hr className="my-4" />
                                         </>
@@ -46,13 +67,31 @@ export const PostList:FC<Posts> = ({posts}) => {
                         </div>
                     ))
                 ) : (
-                    <div className="card" style={BorderLessCard}>
-                        <div className="card-body p-0">
-                            <h1 className="display-6">
-                                No posts available
-                            </h1>
+                    <>
+                        <div className="card text-bg-light mb-3" style={BorderLessCard}>
+                            <div className="card-body">
+                                <div className="row">
+                                    <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                        <h6 className=''>Draft an Article ?</h6>
+                                        <Link to={`/posts/draft`} style={LinkStyle}>
+                                            <button className="btn btn-info" style={RoundButton}>Draft</button>
+                                        </Link>
+                                    </div>
+                                    <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div className="card" style={BorderLessCard}>
+                        <div className="card-body p-0">
+                                <h1 className="display-6">
+                                    No posts available
+                                </h1>
+                            </div>
+                        </div>
+                    </>
+                    
                 )}
             </div>
         </>

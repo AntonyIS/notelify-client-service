@@ -42,11 +42,11 @@ const App:FC = ()  =>{
       <BrowserRouter>
       <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} user={user} />
         <Routes>
-            <Route path="/" element={<Home/>}/>
+            <Route path="/" element={<Home isLoggedIn={isLoggedIn}/>}/>
             <Route path="/posts/:post_id" element={<PostPage/>}/>
             <Route path="/posts/draft" element={<CreatePost/>}/>
             <Route path="/posts/edit/:post_id" element={<PostEdit/>}/>
-            <Route path="/users/:user_id" element={<UserPage/>}/>
+            <Route path="/users/:user_id" element={<UserPage isLoggedIn={isLoggedIn} />}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/signup" element={<SignUp/>}/>
             <Route path="/github/oauth2/callback" element={<RedirectOauth/>}/>

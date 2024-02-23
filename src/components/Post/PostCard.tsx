@@ -51,7 +51,7 @@ export const PostCard:FC<PostItem> = ({post}) => {
                             </p>
                         </Link>
                     </div>
-                    {post && post.article_id && <PostFooter post_id={post.article_id} />}
+                    {post && post.article_id && <PostFooter post={post} />}
 
                     <hr className="my-4" />
                 </div>

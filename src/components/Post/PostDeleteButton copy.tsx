@@ -1,16 +1,19 @@
 import { FC } from "react";
 import { useNavigate } from 'react-router-dom';
-import {PostItemID } from "../../Types/Types";
 import { DeletePost } from "../../Services/postService";
 
-
-export const PostDeleteButton:FC<PostItemID> = ({post_id}) => {
+interface Prop {
+    post_id : string | undefined
+}
+export const PostDeleteButton:FC<Prop> = ({post_id}) => {
     const navigate = useNavigate();
     const handleDelete = async () => {
         const confirmDelete = window.confirm("Are you sure you want to delete this post?");
         if (confirmDelete){
-            DeletePost(post_id)
-            navigate("/");
+            if (post_id !== undefined) {
+                DeletePost(post_id)
+                navigate("/");
+            }
         }else{
             return
         }

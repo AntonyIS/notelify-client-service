@@ -1,9 +1,11 @@
 import { FC } from "react";
-import {PostItemID } from "../../Types/Types";
 import { LinkStyle } from "../../Styles/Styles";
-import { Link } from "react-router-dom";
 
-export const PostEditButton:FC<PostItemID> = ({post_id}) => {
+import { Link } from "react-router-dom";
+interface Prop {
+    post_id : string | undefined
+}
+export const PostEditButton:FC<Prop> = ({post_id}) => {
     return <>
         
             <div className="col-auto">

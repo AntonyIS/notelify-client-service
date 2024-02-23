@@ -7,7 +7,9 @@ import { PostList } from '../../components/Post/PostList';
 import { GetUser } from '../../Services/userService';
 import { UserPosts } from '../../Services/postService';
 
-
+interface userProps  {
+    isLoggedIn : Boolean
+}
 
 
 const imageStyle = {
@@ -18,7 +20,7 @@ const imageStyle = {
 }
 
 
-export  const UserPage:FC = () => {
+export  const UserPage:FC <userProps>= ({isLoggedIn}) => {
     const { user_id } = useParams<string>();
     const [user, setUser] = useState<User>()
     const [posts, setPosts] = useState<Post[]>([])
@@ -87,7 +89,7 @@ export  const UserPage:FC = () => {
                                             </li>
                                         </ul>
                                         <div id="user-home-tab">
-                                            <PostList posts={posts} />
+                                            <PostList posts={posts} isLoggedIn={isLoggedIn} />
                                         </div>
                                     </div>
                                 </div>

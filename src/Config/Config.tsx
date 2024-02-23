@@ -8,8 +8,8 @@ if (!CLIENT_ID) {
 let USERS_URL = "/users/v1/";
 let POSTS_URL = "/posts/v1/";
 let LOGGING_URL = "/logger/v1/";
-let REDIRECT_URI = "http://notelify.com/github/oauth2/callback";
-let GITHUB_CALL_BACK_URL = "http://users:8000/users/v1/github/login/callback";
+let REDIRECT_URI = "http://localhost:3000/github/oauth2/callback";
+let GITHUB_CALL_BACK_URL = "http://localhost:8000/users/v1/github/login/callback";
 
 if (ENV === "development") {
     USERS_URL = "http://127.0.0.1:8000/users/v1/";
