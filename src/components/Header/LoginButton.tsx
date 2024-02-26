@@ -4,8 +4,7 @@ import { HandleGitHubCallback } from '../../Services/authService';
 
 
 const LoginButton: React.FC = () => {
-    const handleLogin = (): void => {
-        
+    const handleLogin = (): void => { 
     };
       
     useEffect(() => {
@@ -17,8 +16,13 @@ const LoginButton: React.FC = () => {
     }, []);
 
   return (
-    <button type="button" className="btn btn-outline-secondary fw-light text-dark m-1" onClick={handleLogin} style={RoundButton}>
-        Login
+    <button 
+      type="button" 
+      className="btn btn-outline-secondary fw-light text-dark m-1" 
+      onClick={handleLogin} 
+      style={RoundButton}
+      >
+      Login
     </button>
   );
 };

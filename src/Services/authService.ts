@@ -15,6 +15,7 @@ export const HandleGitHubCallback = async (code: string): Promise<void> => {
     let oauthCode: OauthCode = {
         code : code
     }
+    console.log("GITHUB_CALL_BACK_URL",GITHUB_CALL_BACK_URL)
     try {
         const response = await fetch(GITHUB_CALL_BACK_URL, {
             method: 'POST',

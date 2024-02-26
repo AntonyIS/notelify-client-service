@@ -2,8 +2,7 @@ import { Link } from "react-router-dom";
 import { LinkStyle, NavbarStyle, RoundButton } from "../../Styles/Styles";
 import { SearchInput } from "./SearchInput";
 import { DraftPostButton } from "./DraftPostButton";
-import { Notification } from "./Notification";
-import { UserProfile } from "./UserProfile";
+import { UserProfile } from "../User/UserProfile";
 import LoginButton from "../Auth/LoginButton";
 import { User } from "../../Types/Types";
 
@@ -36,23 +35,32 @@ export const Header: React.FC<HeaderProps> = ({ isLoggedIn, onLogout ,user}) => 
                         <span className="navbar-toggler-icon"></span>
                     </button>
                    
-                   
                     <div className="collapse navbar-collapse" id="navbarText">
                         <ul className="navbar-nav me-auto mb-lg-0">
                         
                         </ul>
                         {isLoggedIn ? (
                            <>
-                                <Link to={`/posts/draft`} style={LinkStyle} >
-                                    <DraftPostButton />
+                                <Link 
+                                    to={`/posts/draft`} 
+                                    style={LinkStyle} 
+                                >
+                                <DraftPostButton />
                                 </Link>
-                                <Notification />
-                                <UserProfile user={user} />
-                                
-                                <button type="button" className="btn btn-outline-secondary fw-light text-dark m-1" onClick={onLogout} style={RoundButton}>
+                                <button
+                                    type="button" 
+                                    className="btn btn-outline-secondary fw-light text-dark m-1" 
+                                    onClick={onLogout} 
+                                    style={RoundButton}
+                                >
                                     Logout
                                 </button>
-                              
+                                <Link 
+                                   to={`/users/${user?.user_id}`} 
+                                   style={LinkStyle} 
+                                >
+                                    <UserProfile user={user} />
+                                </Link>
                            </>
                         ) : (
                             <LoginButton />

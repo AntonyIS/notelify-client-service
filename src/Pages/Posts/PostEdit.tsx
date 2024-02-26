@@ -73,7 +73,7 @@ export const PostEdit:React.FC = () => {
                                             
                                         </div>
                                     </Link>
-                                    {/* {post && post.article_id && <PostFooter post_id={post.article_id} />} */}
+                                    
 
                                     <img src={"/images/article.jpg"}  className="img-fluid mb-2" alt=""/>
                                     <p className='fw-lighter'>{post?.body}</p>

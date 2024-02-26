@@ -61,7 +61,10 @@ export  const UserPage:FC <userProps>= ({isLoggedIn}) => {
         {
             error ? (
                 <div>
-                     <ResponsePage message="User not found" statusCode={"404"} />
+                     <ResponsePage 
+                        message="User not found" 
+                        statusCode={"404"} 
+                    />
                 </div>
             ):(
                 <div>
@@ -76,7 +79,6 @@ export  const UserPage:FC <userProps>= ({isLoggedIn}) => {
                                         <h4>
                                             {user?.about}
                                         </h4>
-                                        {/* <p>Followers {user?.followers} Following {user?.following}</p> */}
                                         <button className="btn btn-info" style={RoundButton}>Follow</button>
                                     </div>
                                 </div>
@@ -103,9 +105,6 @@ export  const UserPage:FC <userProps>= ({isLoggedIn}) => {
                                         <h6 className="">
                                             {user?.firstname} {user?.lastname}
                                         </h6>
-                                        {/* <p>
-                                            {user?.followers} Followers
-                                        </p> */}
                                         <p>
                                             {user?.about}
                                         </p>
